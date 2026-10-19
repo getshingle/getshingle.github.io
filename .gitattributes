@@ -1,0 +1,2 @@
+# Unix line endings on every computer, so build.sh also runs in Git Bash on Windows.
+* text=auto eol=lf

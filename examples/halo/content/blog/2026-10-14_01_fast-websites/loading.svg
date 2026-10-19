@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 460">
+<title>Timeline: first pixels at 0.3 seconds, headline and picture at 0.8 seconds, responds to taps from 1.1 seconds</title>
+<rect width="1200" height="460" fill="#ffffff"/>
+<g font-family="system-ui, sans-serif">
+<text x="60" y="70" fill="#0b0b0d" font-size="28" font-weight="600">A page loading on a mid-range phone</text>
+<text x="60" y="104" fill="#62626c" font-size="20">Seconds after tapping the link</text>
+<path d="M80 300H1120" stroke="#c9c9d1" stroke-width="2"/>
+<g fill="#62626c" font-size="18" text-anchor="middle"><text x="80" y="340">0</text><text x="427" y="340">0.5</text><text x="773" y="340">1.0</text><text x="1120" y="340">1.5</text></g>
+<g stroke="#5b3df5" stroke-width="2"><path d="M288 300V196"/><path d="M635 300V196"/><path d="M843 300V196"/></g>
+<g fill="#5b3df5" stroke="#ffffff" stroke-width="3"><circle cx="288" cy="300" r="10"/><circle cx="635" cy="300" r="10"/><circle cx="843" cy="300" r="10"/></g>
+<g fill="#0b0b0d" font-size="20"><text x="288" y="168" text-anchor="middle">First pixels</text><text x="635" y="168" text-anchor="middle">Headline and picture</text><text x="843" y="168" text-anchor="start" dx="-60">Responds to taps</text></g>
+<g fill="#62626c" font-size="18"><text x="288" y="190" text-anchor="middle">0.3 s</text><text x="635" y="190" text-anchor="middle">0.8 s</text><text x="783" y="190">1.1 s</text></g>
+</g></svg>

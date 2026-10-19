@@ -1,0 +1,39 @@
+---
+title: Free hosting with Cloudflare
+description: Cloudflare Pages shows your website from GitHub, fast and free, and updates it on every push.
+---
+<article>
+  <nav aria-label="Breadcrumb"><a href="/online/">Put it online</a></nav>
+  <hgroup>
+    <p>Step 3</p>
+    <h1>Free hosting with Cloudflare</h1>
+    <p>Cloudflare Pages takes your website from GitHub and shows it to the world, fast and free. Each time you push in GitHub Desktop, it updates within a minute.</p>
+  </hgroup>
+
+  <h2>Once: connect GitHub</h2>
+  <ol>
+    <li>Make a free account on <a href="https://dash.cloudflare.com/sign-up">cloudflare.com</a>.</li>
+    <li>In the Cloudflare dashboard, open <strong>Workers &amp; Pages</strong> and create a new <strong>Pages</strong> project with <strong>Connect to Git</strong>. Cloudflare's labels change from time to time; look for "Pages" and "Git".</li>
+    <li>Allow Cloudflare to read your GitHub account and choose the repository with your website.</li>
+    <li>Leave the <strong>build command</strong> empty and set the <strong>build output directory</strong> to <code>/</code>. Your repository already holds the finished website, so there is nothing to build.</li>
+    <li>Click <strong>Save and Deploy</strong>.</li>
+  </ol>
+  <p>After a minute your website is online at an address like <code>my-website.pages.dev</code>.</p>
+
+  <h2>Your own domain</h2>
+  <p>In your Pages project, open <strong>Custom domains</strong> and add your domain. Cloudflare shows what to change at the company where you bought it. Set <code>SITE_URL</code> in <code>site.conf</code> to that domain and build again.</p>
+
+  <details>
+    <summary>Without GitHub</summary>
+    <p>Cloudflare can also take the folder directly: create a Pages project with <strong>Upload assets</strong> (sometimes called Direct Upload) and drag the <code>dist</code> folder into the page. You then upload again after every change.</p>
+  </details>
+  <details>
+    <summary>Safer settings for browsers</summary>
+    <p>The <a href="/extras/extensions/">cloudflare extension</a> adds a <code>_headers</code> file with safe default settings, and a <code>_redirects</code> file for pages that moved.</p>
+  </details>
+
+  <div class="actions">
+    <a class="btn" href="/online/">All steps</a>
+    <a class="btn primary" href="/online/automatic/">Next: let the internet build it</a>
+  </div>
+</article>

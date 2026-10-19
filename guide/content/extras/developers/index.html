@@ -1,0 +1,108 @@
+---
+title: For developers
+description: How Shingle's build works, how to change its templates, and how to write your own extension or theme.
+---
+<article>
+  <nav aria-label="Breadcrumb"><a href="/extras/">Extras</a></nav>
+  <hgroup>
+    <p>For developers</p>
+    <h1>How Shingle works</h1>
+    <p>Shingle is one bash script of under 400 lines, plus templates. It runs with bash 3.2 (macOS), newer bash (Linux) and Git Bash (Windows), and needs only the standard tools <code>find</code>, <code>sed</code>, <code>awk</code>, <code>base64</code> and <code>cksum</code>.</p>
+  </hgroup>
+
+  <h2>Folders</h2>
+<pre><code>build.sh       the build
+site.conf      settings, read as bash
+content/       pages: .html (or .md with the markdown extension)
+static/        copied to dist/ as it is
+templates/     layout.html, header.html, footer.html
+assets/        base.css, script.js and icons/*.svg
+themes/        &lt;name&gt;/theme.css, chosen by THEME in site.conf
+extensions/    add-ons; a folder whose name starts with _ is off
+dist/          the result; emptied on each build except hidden files such as .git</code></pre>
+
+  <h2>What a build does</h2>
+  <ol>
+    <li>Empties <code>dist/</code>, keeping hidden files, so <code>dist/</code> can be a Git repository of its own.</li>
+    <li>For an extension seen for the first time (no <code>content/&lt;name&gt;/</code> yet), copies its <code>example/</code> to <code>content/&lt;name&gt;/</code> and adds its menu link to <code>site.conf</code>.</li>
+    <li>Reads <code>site.conf</code> (Windows line endings are removed first).</li>
+    <li>Copies <code>static/</code> and the extensions' <code>static/</code>. Joins <code>assets/base.css</code>, <code>extensions/*.css</code>, the extensions' <code>style.css</code> and the theme into <code>assets/site.css</code>, and the scripts into <code>assets/site.js</code>, each with a version number for caching.</li>
+    <li>Turns each icon into <code>&#123;&#123;ICON_&lt;NAME&gt;}}</code> and the logo into <code>&#123;&#123;LOGO}}</code>.</li>
+    <li>Makes a page from each file in <code>content/</code>; other files are copied. A folder with an <code>_index</code> file belongs to an extension and is skipped.</li>
+    <li>Runs each extension's <code>build</code>, then each extension's <code>finish</code>.</li>
+  </ol>
+
+  <h2>Pages</h2>
+<pre><code>content/index.html          → /
+content/about.html          → /about/
+content/legal/terms.html    → /legal/terms/
+content/shop/index.html     → /shop/   (with its pictures next to it)
+content/404.html            → /404.html</code></pre>
+  <p>The header goes between <code>---</code> lines, or between <code>&lt;!--</code> and <code>--&gt;</code> lines if you want the file to stay valid HTML. Each field becomes <code>&#123;&#123;PAGE_&lt;FIELD&gt;}}</code>. The layout uses <code>title</code>, <code>description</code>, <code>image</code> (a JPG or PNG for link previews) and <code>robots</code>.</p>
+
+  <h2>Values and the line rule</h2>
+  <p>Pages and templates can use any variable as <code>&#123;&#123;NAME}}</code>: everything in <code>site.conf</code>, <code>&#123;&#123;EMAIL}}</code> and <code>&#123;&#123;PHONE}}</code> as links (the plain values are <code>&#123;&#123;EMAIL_ADDRESS}}</code> and <code>&#123;&#123;PHONE_NUMBER}}</code>), <code>&#123;&#123;ICON_GITHUB}}</code>, <code>&#123;&#123;LOGO}}</code>, <code>&#123;&#123;YEAR}}</code> and the <code>PAGE_</code> values. Values are HTML-escaped when they are read from a header.</p>
+  <p>Templates have no if-statements. One rule replaces them: <strong>a line whose values are all empty is left out.</strong> A phone line in the footer disappears when <code>PHONE</code> is empty.</p>
+
+  <h2>Templates</h2>
+  <p>The page frame is <code>templates/layout.html</code>, <code>header.html</code> and <code>footer.html</code>. An extension's templates are in <code>extensions/&lt;name&gt;/templates/</code>; to change one, copy it to <code>templates/&lt;name&gt;/</code> and edit the copy. Your copy wins, and updating the extension does not overwrite it.</p>
+
+  <h2>Links</h2>
+  <p>Write links from the site's root: <code>href=&quot;/about/&quot;</code>, <code>src=&quot;/img/photo.jpg&quot;</code>.</p>
+  <ul>
+    <li><code>LINKS="files"</code> (the default) rewrites them after the build, for example to <code>../about/index.html</code>. The site then works from a folder on your computer, on any web server and in a subfolder such as a GitHub Pages project site.</li>
+    <li><code>LINKS="web"</code> keeps them as they are, for shorter addresses on a web server. To look at the result, run <code>python3 -m http.server -d dist 8080</code> and open <code>http://localhost:8080</code>.</li>
+  </ul>
+  <p><code>404.html</code> is shown for any wrong address, at any depth, so its links always start at the root, with the path from <code>SITE_URL</code> in front when the site lives in a subfolder.</p>
+
+  <h2>Write an extension</h2>
+<pre><code>extensions/&lt;name&gt;/
+  extension.sh     required
+  templates/       its templates
+  style.css        wrapped in @layer extensions { … }
+  script.js        added to site.js
+  static/          copied to dist/
+  example/         copied to content/&lt;name&gt;/ the first time
+  README.md</code></pre>
+  <p><code>extension.sh</code> is sourced by the build. It can set:</p>
+<pre><code>MENU_LINK="Recipes"    # added to MENU in site.conf the first time, as /recipes/
+MENU_LIST=LEGAL        # optional: add it to another list instead
+build() { …; }         # runs after the pages are built
+finish() { …; }        # runs at the very end; PAGES lists every address</code></pre>
+  <p>Code shared by several extensions lives in <code>extensions/*.sh</code> and is loaded first. <code>collection.sh</code> lists entries for the blog, news, team, careers and portfolio:</p>
+<pre><code>MENU_LINK="Recipes"
+build() {
+  LIST_SORT=desc LIST_PER_PAGE=12 LIST_FEED=true LIST_IMAGE_FILE=cover
+  collection
+}
+item_hook() {    # optional, runs for every entry
+  ITEM_SERVES=${FM_serves:+Serves $FM_serves}
+}</code></pre>
+  <p>An entry is <code>content/&lt;name&gt;/&lt;key&gt;_&lt;slug&gt;.html</code> or a folder with <code>index.html</code>. The key (a date or a number) sorts the entries; the slug is the address. <code>_index.html</code> holds the list page's header, and its <code>per_page</code>, <code>sort</code>, <code>pages</code> and <code>feed</code> win over the defaults.</p>
+  <p>In <code>item_hook</code>, the header is in <code>FM_&lt;field&gt;</code> (in order in <code>FM_KEYS</code>) and the text in <code>BODY</code>. Templates get <code>ITEM_&lt;FIELD&gt;</code>, <code>ITEM_URL</code>, <code>ITEM_TITLE_LINK</code>, <code>ITEM_DATE</code>, <code>ITEM_DATE_TEXT</code>, <code>ITEM_IMAGE</code>, <code>ITEM_BODY</code>, and <code>JSON_&lt;FIELD&gt;</code> for <code>schema.json</code>. The list templates are <code>list.html</code>, <code>card.html</code>, <code>item.html</code>, <code>pager.html</code> and <code>schema.json</code>. Helpers return their result in <code>REPLY</code>: <code>html</code>, <code>json</code>, <code>field &lt;file&gt; &lt;key&gt;</code>, <code>date_text</code>, <code>email_link</code>, <code>phone_link</code>, <code>social_links</code>.</p>
+
+  <h2>Write a theme</h2>
+  <p>A theme is <code>themes/&lt;name&gt;/theme.css</code>. It sets the color, font and size tokens; anything else in it wins over the template's styles, because the template's CSS is in layers and the theme is not. Two lines in its first comment are read by the build:</p>
+<pre><code>Fonts: https://fonts.googleapis.com/css2?family=…    or "none"
+Browser color: #ffffff</code></pre>
+  <p>Other files next to <code>theme.css</code>, such as fonts, are published in <code>/assets/</code>; <code>preview.jpg</code> and <code>README.md</code> are not.</p>
+
+  <h2>Check your work</h2>
+  <ul>
+    <li><code>shellcheck -x build.sh extensions/*.sh extensions/*/extension.sh</code></li>
+    <li>The <a href="https://validator.w3.org/nu/">Nu HTML Checker</a> for the pages in <code>dist/</code>.</li>
+  </ul>
+
+  <h2>Source code</h2>
+  <p>Shingle lives in four repositories in the <a href="https://github.com/getshingle">getshingle</a> organization on GitHub:</p>
+  <ul>
+    <li><a href="https://github.com/getshingle/shingle">shingle</a>: the template, exactly what <code>shingle.zip</code> contains.</li>
+    <li><a href="https://github.com/getshingle/extensions">extensions</a>: blog, portfolio, news, team, careers and the others.</li>
+    <li><a href="https://github.com/getshingle/themes">themes</a>: the extra themes.</li>
+    <li><a href="https://github.com/getshingle/getshingle.github.io">getshingle.github.io</a>: this guide, the examples, and the tools that test everything on Linux, macOS (with its bash 3.2) and Windows and publish this website.</li>
+  </ul>
+
+  <h2>License</h2>
+  <p>The build code (<code>build.sh</code> and the extensions' <code>.sh</code> files) is under the <a href="https://www.gnu.org/licenses/agpl-3.0.html">GNU AGPL 3.0 or later</a>. Everything that ends up in your website (styles, scripts, templates, icons, themes and the demo content) is under the MIT license.</p>
+  <p>That means: <strong>your website is yours.</strong> Building it with Shingle does not put your pages, pictures or design under the AGPL. If you change Shingle's build code and share or offer it to others, share your changes under the same license.</p>
+</article>

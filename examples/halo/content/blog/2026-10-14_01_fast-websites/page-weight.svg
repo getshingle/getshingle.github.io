@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 520">
+<title>Page weight: a typical site we audit sends 3.4 MB, the sites we build send under 0.5 MB</title>
+<rect width="1200" height="520" fill="#ffffff"/>
+<g font-family="system-ui, sans-serif">
+<text x="60" y="70" fill="#0b0b0d" font-size="28" font-weight="600">Data sent to load the home page</text>
+<text x="60" y="104" fill="#62626c" font-size="20">Megabytes, on a phone</text>
+<path d="M300 150V430" stroke="#c9c9d1" stroke-width="2"/>
+<text x="60" y="222" fill="#0b0b0d" font-size="22">Typical site we audit</text>
+<path d="M300 196H1016a4 4 0 0 1 4 4v32a4 4 0 0 1-4 4H300z" fill="#9b9ba6"/>
+<text x="1036" y="224" fill="#0b0b0d" font-size="22" font-weight="600">3.4 MB</text>
+<text x="60" y="352" fill="#0b0b0d" font-size="22">A site we build</text>
+<path d="M300 326H397a4 4 0 0 1 4 4v32a4 4 0 0 1-4 4H300z" fill="#5b3df5"/>
+<text x="417" y="354" fill="#0b0b0d" font-size="22" font-weight="600">0.48 MB</text>
+<g fill="#62626c" font-size="18" text-anchor="middle"><text x="300" y="470">0</text><text x="511" y="470">1</text><text x="721" y="470">2</text><text x="932" y="470">3</text></g>
+</g></svg>

@@ -1,0 +1,27 @@
+---
+title: What a fast website means in 2026
+summary: Speed is not a score in a testing tool. It is how quickly a visitor on a phone can read your page and do what they came for.
+tag: Performance
+author: david-osei
+cover_alt: Three circular gauges showing load time, interaction and layout stability
+---
+<p>When a client asks us for a fast website, they usually mean a green score in Google’s PageSpeed test. That score is useful, but it measures a lab. Your visitors live in the real world: on a train, on an older phone, with twenty tabs open.</p>
+<h2>Three moments that matter</h2>
+<p>Google measures speed with three numbers called Core Web Vitals. In plain words, they answer three questions a visitor asks without thinking about it:</p>
+<ol>
+<li><strong>Can I see it?</strong> How long until the biggest thing on the page, usually the headline or the main picture, is on screen. Aim for under 2.5 seconds.</li>
+<li><strong>Does it respond?</strong> How long the page takes to react when you tap a button or open a menu. Aim for under 200 milliseconds.</li>
+<li><strong>Does it stay still?</strong> Whether things jump around while the page loads, so you tap the wrong link. Aim for almost no movement at all.</li>
+</ol>
+<figure><img src="loading.svg" alt="A timeline of a page loading: the headline appears at 0.8 seconds and the page responds to taps from 1.1 seconds" loading="lazy"><figcaption>What a visitor sees on a mid-range phone, second by second.</figcaption></figure>
+<h2>Where the weight comes from</h2>
+<p>Most slow sites we audit are not slow because of their servers. They are slow because of what they send: large photos, several fonts, and scripts for chat widgets, trackers and sliders that nobody asked for.</p>
+<figure><img src="page-weight.svg" alt="Bar chart: a typical site we audit sends 3.4 MB to load its home page; a site we build sends 0.48 MB" loading="lazy"><figcaption>A typical site we audit, compared with the sites we build.</figcaption></figure>
+<h2>What we do on every site</h2>
+<ul>
+<li>Pictures are resized and saved as modern formats, and only load when they come into view</li>
+<li>One font family, loaded from the same server as the site</li>
+<li>No script on a page unless that page needs it</li>
+<li>Every page tested on a real mid-range phone before launch</li>
+</ul>
+<p>None of this is exotic. It is a list of small decisions, made early and kept for the life of the site. If you would like us to look at your site’s speed, <a href="/contact/">get in touch</a>.</p>

@@ -1,0 +1,124 @@
+---
+title: Extensions
+description: Add a blog, projects, news, a team page, job openings, a privacy policy, a sitemap or Markdown pages to your Shingle website.
+---
+<section>
+  <nav aria-label="Breadcrumb"><a href="/extras/">Extras</a></nav>
+  <hgroup>
+    <p>Extensions</p>
+    <h1>A blog, a team page and more</h1>
+    <p>Each extension adds one thing to your website. Add only the ones you need; each comes with example content to replace.</p>
+  </hgroup>
+  <div class="cols-3">
+    <article>
+      <h2>Blog</h2>
+      <p>Articles with a cover picture, newest first, 12 to a page, and a feed for news readers.</p>
+      <div class="actions"><a class="btn" href="/downloads/extension-blog.zip">Download</a> <a href="/demo/extensions/blog/" target="_blank" rel="noopener">See it ↗</a></div>
+    </article>
+    <article>
+      <h2>Portfolio</h2>
+      <p>Your projects, each with its own page. Or just a list of clients and references.</p>
+      <div class="actions"><a class="btn" href="/downloads/extension-portfolio.zip">Download</a> <a href="/demo/extensions/portfolio/" target="_blank" rel="noopener">See it ↗</a></div>
+    </article>
+    <article>
+      <h2>News</h2>
+      <p>Short announcements as a dated list, with a feed.</p>
+      <div class="actions"><a class="btn" href="/downloads/extension-news.zip">Download</a> <a href="/demo/extensions/news/" target="_blank" rel="noopener">See it ↗</a></div>
+    </article>
+    <article>
+      <h2>Team</h2>
+      <p>A card for each person, and a page with their photo, story, contact details and social links.</p>
+      <div class="actions"><a class="btn" href="/downloads/extension-team.zip">Download</a> <a href="/demo/extensions/team/" target="_blank" rel="noopener">See it ↗</a></div>
+    </article>
+    <article>
+      <h2>Careers</h2>
+      <p>Your job openings, each with its own page, open or filled. Open positions show up in Google's job search.</p>
+      <div class="actions"><a class="btn" href="/downloads/extension-careers.zip">Download</a> <a href="/demo/extensions/careers/" target="_blank" rel="noopener">See it ↗</a></div>
+    </article>
+    <article>
+      <h2>Privacy policy</h2>
+      <p>A sample privacy policy page, linked at the bottom of every page.</p>
+      <div class="actions"><a class="btn" href="/downloads/extension-privacy.zip">Download</a> <a href="/demo/extensions/privacy/" target="_blank" rel="noopener">See it ↗</a></div>
+    </article>
+    <article>
+      <h2>Sitemap</h2>
+      <p>A list of all your pages for Google and other search engines (<code>sitemap.xml</code> and <code>robots.txt</code>).</p>
+      <div class="actions"><a class="btn" href="/downloads/extension-sitemap.zip">Download</a></div>
+    </article>
+    <article>
+      <h2>Cloudflare</h2>
+      <p>Safe settings for browsers and redirects for pages that moved, for websites on Cloudflare Pages.</p>
+      <div class="actions"><a class="btn" href="/downloads/extension-cloudflare.zip">Download</a></div>
+    </article>
+    <article>
+      <h2>Markdown</h2>
+      <p>Write pages and posts in Markdown, a simple text format, instead of HTML. Needs one extra program.</p>
+      <div class="actions"><a class="btn" href="/downloads/extension-markdown.zip">Download</a></div>
+    </article>
+  </div>
+</section>
+
+<section class="tinted narrow">
+  <h2>Add an extension</h2>
+  <ol class="steps cols-2">
+    <li>
+      <h3>Download and unzip</h3>
+      <p>Download the extension and double-click the zip. You get a folder with the extension inside, for example <code>blog</code>, and for some extensions two more files, <code>collection.sh</code> and <code>collection.css</code>.</p>
+    </li>
+    <li>
+      <h3>Copy into extensions</h3>
+      <p>Move everything from that folder into the <code>extensions</code> folder in your <code>shingle</code> folder. If your computer asks whether to replace <code>collection.sh</code> or <code>collection.css</code>, say yes.</p>
+    </li>
+    <li>
+      <h3>Build</h3>
+      <p>Run <code>bash build.sh</code>. The first time, Shingle puts example content in <code>content/blog/</code> and adds "Blog" to the menu in <code>site.conf</code>. It tells you what it added.</p>
+    </li>
+    <li>
+      <h3>Make it yours</h3>
+      <p>Change or replace the examples in <code>content/blog/</code>. The file <code>README.md</code> in the extension's folder explains every field.</p>
+    </li>
+  </ol>
+</section>
+
+<section class="narrow">
+  <h2>Write a blog post</h2>
+  <p>Each post is a file in <code>content/blog/</code>. Its name starts with the date and ends with the address of the post:</p>
+  <pre><code>content/blog/2026-10-18_opening-day.html    → /blog/opening-day/</code></pre>
+  <p>A post with pictures is a folder with the pictures next to the text:</p>
+  <pre><code>content/blog/2026-10-18_opening-day/index.html
+content/blog/2026-10-18_opening-day/cover.jpg    the picture on the blog page
+content/blog/2026-10-18_opening-day/inside.jpg   a picture in the text</code></pre>
+  <p>The post starts with a short header, then the text:</p>
+  <pre><code>---
+title: We are open
+summary: One or two sentences for the blog page and for link previews.
+cover_alt: Our new shop from the street
+---
+&lt;p&gt;After three months of work, the doors are open.&lt;/p&gt;
+&lt;img src=&quot;inside.jpg&quot; alt=&quot;The shop inside, with wooden shelves&quot;&gt;</code></pre>
+  <p>News works the same way. The team, careers and projects (portfolio) use a number instead of a date, which sets the order: <code>001_anna-berg.html</code> comes first.</p>
+  <ul>
+    <li><code>draft: true</code> in the header keeps a post off the website. <code>bash build.sh preview</code> shows drafts, so you can look before you publish.</li>
+    <li>A post dated in the future appears with the first build on or after that day.</li>
+  </ul>
+</section>
+
+<section class="narrow">
+  <h2>Switch one off</h2>
+  <details>
+    <summary>Remove the link from the menu</summary>
+    <p>Delete its line from <code>MENU</code> (or <code>LEGAL</code>) in <code>site.conf</code>. Shingle adds the link only the first time, so it will not come back.</p>
+  </details>
+  <details>
+    <summary>Switch an extension off for a while</summary>
+    <p>Rename its folder so it starts with <code>_</code>, for example <code>extensions/_careers</code>, and delete its menu line. Your content stays in <code>content/careers/</code>; rename the folder back to switch it on again.</p>
+  </details>
+  <details>
+    <summary>Remove an extension completely</summary>
+    <p>Delete its folder in <code>extensions/</code>, its folder in <code>content/</code> and its menu line.</p>
+  </details>
+  <details>
+    <summary>Markdown needs cmark-gfm</summary>
+    <p>The Markdown extension uses a small program to turn Markdown into HTML. On a Mac, install <a href="https://brew.sh">Homebrew</a> and run <code>brew install cmark-gfm</code>; on Ubuntu, run <code>sudo apt install cmark-gfm</code>; on Windows, use WSL. Its README has the details. Without the extension, Shingle reads only <code>.html</code> and needs nothing extra.</p>
+  </details>
+</section>

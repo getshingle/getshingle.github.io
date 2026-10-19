@@ -1,0 +1,59 @@
+---
+title: Make it yours
+description: Change the name, the menu, the text, the pictures and the colors of your Shingle website.
+---
+<article>
+  <hgroup>
+    <p>Make it yours</p>
+    <h1>Change anything, then build again</h1>
+    <p>Every change works the same way: edit a file, save it, run <code>bash build.sh</code>, and reload the page in your browser.</p>
+  </hgroup>
+
+  <p>To edit the files, use a plain text editor. <a href="https://code.visualstudio.com">Visual Studio Code</a> is free and works on every computer. Word or Pages will not work, because they add their own formatting.</p>
+
+  <h2>Your name, contact and menu: site.conf</h2>
+  <p>Open <code>site.conf</code>. It holds the settings for the whole website. Change the text between the quotes:</p>
+  <pre><code>SITE_NAME="Atrium"
+EMAIL="hello@example.com"
+PHONE="+1 555 0142"</code></pre>
+  <p>No spaces around the <code>=</code> sign. If something is wrong, Shingle tells you which line to fix.</p>
+  <p>The menu has one line per link: the text you see, a <code>|</code>, and the address of the page.</p>
+  <pre><code>MENU=(
+  "About|/about/"
+  "Services|/services/"
+  "Contact|/contact/"
+)</code></pre>
+  <p>Each setting has a short explanation next to it in the file.</p>
+
+  <h2>The text of a page: content/</h2>
+  <p>Each file in <code>content/</code> is one page: <code>content/about.html</code> becomes the About page. Change the words between the tags and leave the tags as they are:</p>
+  <pre><code>&lt;h1&gt;Calm, bright rooms that are built to last&lt;/h1&gt;
+&lt;p&gt;Write your own text here.&lt;/p&gt;</code></pre>
+  <p>The lines at the very top, between <code>---</code>, are the page's title and description for search engines and link previews.</p>
+
+  <h2>A new page</h2>
+  <ol>
+    <li>Copy <code>content/about.html</code> and name the copy, for example, <code>content/prices.html</code>.</li>
+    <li>Change its title at the top and its text.</li>
+    <li>Add <code>"Prices|/prices/"</code> to <code>MENU</code> in <code>site.conf</code>.</li>
+  </ol>
+
+  <h2>Pictures</h2>
+  <p>Put your pictures in <code>static/img/</code> and show them in a page like this:</p>
+  <pre><code>&lt;img src=&quot;/img/our-team.jpg&quot; alt=&quot;Our team in front of the office&quot;&gt;</code></pre>
+  <p>The <code>alt</code> text describes the picture for people who cannot see it. About 1600 pixels wide is plenty; save photos as JPG.</p>
+
+  <h2>Your logo and icon</h2>
+  <ul>
+    <li><code>static/img/logo.svg</code> is the logo next to your name. A <code>logo.png</code> works too (then delete <code>logo.svg</code>).</li>
+    <li><code>static/favicon.svg</code>, <code>favicon.ico</code> and <code>apple-touch-icon.png</code> are the small icons in the browser tab and on phones.</li>
+    <li><code>static/img/share.png</code> (1200 × 630 pixels) is the picture shown when someone shares your website.</li>
+  </ul>
+
+  <h2>Colors and fonts</h2>
+  <p>Colors and fonts come from a theme. Pick another one in <a href="/extras/themes/">Themes</a>, or change the colors in <code>themes/default/theme.css</code>.</p>
+
+  <div class="actions">
+    <a class="btn primary" href="/online/">Next: put it online</a>
+  </div>
+</article>

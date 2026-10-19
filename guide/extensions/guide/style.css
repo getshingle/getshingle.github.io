@@ -1,0 +1,28 @@
+/* SPDX-License-Identifier: MIT */
+/* Styles for the Shingle guide: breadcrumbs, preview cards, wide tables. */
+@layer extensions {
+  nav[aria-label="Breadcrumb"] { margin-bottom: 1.5rem; font-size: .9375rem; }
+  nav[aria-label="Breadcrumb"] a { color: var(--muted); text-decoration: none; }
+  nav[aria-label="Breadcrumb"] a::before { content: "← "; }
+  nav[aria-label="Breadcrumb"] a:hover { color: var(--ink); }
+
+  /* A picture at the top of a card fills its width. */
+  :is(.cols-2, .cols-3) > article > figure:first-child {
+    margin: -1.5rem -1.5rem 1.25rem;
+    aspect-ratio: 8 / 5;
+    overflow: hidden;
+    border-radius: calc(var(--radius) - 1px) calc(var(--radius) - 1px) 0 0;
+    background: var(--line);
+  }
+  :is(.cols-2, .cols-3) > article > figure:first-child img { width: 100%; height: 100%; object-fit: cover; object-position: top; border-radius: 0; }
+  :is(.cols-2, .cols-3) > article > .actions { margin-top: auto; padding-top: 1.25rem; }
+  .actions .btn + a:not(.btn) { align-self: center; }
+
+  /* Tables scroll sideways on small screens instead of squeezing. */
+  .table { overflow-x: auto; margin-bottom: 1.25rem; }
+  .table table { margin: 0; }
+  .table td:first-child { white-space: nowrap; }
+
+  main > article pre { margin-block: .75rem 1.25rem; }
+  main > article li > pre { margin-top: .75rem; }
+}

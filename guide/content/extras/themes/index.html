@@ -1,0 +1,67 @@
+---
+title: Themes
+description: Other colors and fonts for your Shingle website, each in light and dark mode. Switch by changing one line.
+---
+<section>
+  <nav aria-label="Breadcrumb"><a href="/extras/">Extras</a></nav>
+  <hgroup>
+    <p>Themes</p>
+    <h1>Colors and fonts</h1>
+    <p>A theme sets the colors, fonts and corners of your website, in light and dark mode. Your pages stay exactly as they are.</p>
+  </hgroup>
+  <div class="cols-2">
+    <article>
+      <figure><img src="/img/theme-default.jpg" alt="The demo website in the Default theme: concrete, oak and black iron" width="1200" height="750" loading="lazy"></figure>
+      <h2><a href="/demo/extensions/" target="_blank" rel="noopener">Default ↗</a></h2>
+      <p>Concrete, oak and black iron: warm limestone pages, iron-black buttons and oak details, with wide Archivo headings and square corners. Comes with Shingle, so there is nothing to download.</p>
+    </article>
+    <article>
+      <figure><img src="/img/theme-forest.jpg" alt="The demo website in the Forest theme: forest green on pale stone" width="1200" height="750" loading="lazy"></figure>
+      <h2><a href="/demo/theme-forest/" target="_blank" rel="noopener">Forest ↗</a></h2>
+      <p>Calm forest green on pale stone, with wide Archivo headings. Made for studios, architects and makers.</p>
+      <div class="actions"><a class="btn" href="/downloads/theme-forest.zip">Download</a></div>
+    </article>
+    <article>
+      <figure><img src="/img/theme-violet.jpg" alt="The demo website in the Violet theme: ink and violet on white" width="1200" height="750" loading="lazy"></figure>
+      <h2><a href="/demo/theme-violet/" target="_blank" rel="noopener">Violet ↗</a></h2>
+      <p>Ink and violet on white, set in Geist, with large tight headings and round buttons. Made for studios and startups.</p>
+      <div class="actions"><a class="btn" href="/downloads/theme-violet.zip">Download</a></div>
+    </article>
+    <article>
+      <figure><img src="/img/theme-clay.jpg" alt="The demo website in the Clay theme: terracotta on warm white" width="1200" height="750" loading="lazy"></figure>
+      <h2><a href="/demo/theme-clay/" target="_blank" rel="noopener">Clay ↗</a></h2>
+      <p>Terracotta on warm white, set in Instrument Sans, with round buttons. Warm and friendly; suits cafés, shops and craftspeople.</p>
+      <div class="actions"><a class="btn" href="/downloads/theme-clay.zip">Download</a></div>
+    </article>
+  </div>
+</section>
+
+<section class="tinted">
+  <h2>Use a theme</h2>
+  <ol class="steps cols-3">
+    <li>
+      <h3>Copy</h3>
+      <p>Download the theme, unzip it and move its folder, for example <code>forest</code>, into <code>themes</code>.</p>
+    </li>
+    <li>
+      <h3>Choose</h3>
+      <p>In <code>site.conf</code>, change the theme line to <code>THEME="forest"</code>.</p>
+    </li>
+    <li>
+      <h3>Build</h3>
+      <p>Run <code>bash build.sh</code> and reload your website.</p>
+    </li>
+  </ol>
+</section>
+
+<section class="narrow">
+  <h2>Make your own</h2>
+  <ol>
+    <li>Copy the folder <code>themes/default</code> and call the copy, for example, <code>themes/mine</code>.</li>
+    <li>Set <code>THEME="mine"</code> in <code>site.conf</code>.</li>
+    <li>Open <code>themes/mine/theme.css</code> and change the colors. Each color has two values, one for light mode and one for dark mode:
+<pre><code>--accent: light-dark(#80532a, #d8a873);    /* links and highlights: oak */</code></pre></li>
+    <li>For other fonts, pick a font on <a href="https://fonts.google.com">Google Fonts</a>, copy its link into the line <code>Fonts:</code> at the top of <code>theme.css</code>, and put its name in <code>--font-body</code> and <code>--font-heading</code>.</li>
+  </ol>
+  <p>Check that text stays easy to read in both modes: the moon or sun button at the top right switches between them.</p>
+</section>

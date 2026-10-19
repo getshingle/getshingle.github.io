@@ -1,0 +1,48 @@
+# Builds getshingle.github.io from this repository and the shingle, extensions
+# and themes repositories, and publishes it on GitHub Pages.
+# Runs on every push here. After a change in another repository, run it by
+# hand: Actions → Website → Run workflow.
+name: Website
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+concurrency:
+  group: pages
+  cancel-in-progress: true
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          path: getshingle.github.io
+      - uses: actions/checkout@v6
+        with:
+          repository: getshingle/shingle
+          path: shingle
+      - uses: actions/checkout@v6
+        with:
+          repository: getshingle/extensions
+          path: extensions
+      - uses: actions/checkout@v6
+        with:
+          repository: getshingle/themes
+          path: themes
+      - name: Test
+        run: bash getshingle.github.io/tools/test.sh
+      - name: Build the website
+        run: bash getshingle.github.io/tools/website.sh
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v4
+        with:
+          path: getshingle.github.io/_site
+      - id: deployment
+        uses: actions/deploy-pages@v4

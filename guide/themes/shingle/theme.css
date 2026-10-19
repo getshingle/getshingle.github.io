@@ -1,0 +1,127 @@
+/* SPDX-License-Identifier: MIT */
+/* ==============================================================================
+   Theme: Shingle
+   The look of the Shingle guide itself: calm blues in the spirit of Material
+   Design, set in Geist. Light mode is near-white with deep blue buttons, dark
+   mode is near-black with pastel blue buttons. Cards are soft filled panels,
+   buttons are round, small labels sit in pastel chips. One vivid color,
+   violet, is kept for the demo button.
+
+   Fonts: https://fonts.googleapis.com/css2?family=Geist:wght@100..900&family=Geist+Mono:wght@400..600&display=swap
+   Browser color: #f9fafd
+   ============================================================================== */
+
+:root {
+  --paper: light-dark(#f9fafd, #101318);       /* page background */
+  --surface: light-dark(#eef2f9, #1a1e26);     /* cards and bands */
+  --ink: light-dark(#181c24, #e3e6ee);         /* text */
+  --muted: light-dark(#4d5465, #a8afbf);       /* secondary text */
+  --line: light-dark(#dde2ec, #2b303b);        /* borders */
+  --accent: light-dark(#1f4f9a, #aac7ff);      /* links and filled buttons */
+  --on-accent: light-dark(#ffffff, #0a2a5c);
+  --tone: light-dark(#dbe6ff, #263a5e);        /* pastel: chips, tonal buttons, code */
+  --on-tone: light-dark(#0e2f66, #d8e4ff);
+  --vivid: light-dark(#6a42e8, #cbbaff);       /* the one button that stands out */
+  --on-vivid: light-dark(#ffffff, #250f63);
+
+  --font-body: "Geist", system-ui, sans-serif;
+  --font-heading: "Geist", system-ui, sans-serif;
+  --font-code: "Geist Mono", ui-monospace, monospace;
+  --heading-weight: 600;
+  --radius: 18px;
+  --radius-button: 999px;
+  --width: 1160px;
+}
+
+/* Headings: one weight, tight but not squeezed. */
+h1, h2, h3 { letter-spacing: -.025em; }
+main > section:first-child h1 {
+  font-size: clamp(2.5rem, 1.4rem + 4vw, 4.25rem);
+  line-height: 1.04;
+  letter-spacing: -.035em;
+}
+main > article h1 { font-size: clamp(2.25rem, 1.5rem + 2.6vw, 3.5rem); line-height: 1.08; letter-spacing: -.03em; }
+
+/* The small label above a heading is a pastel chip. */
+hgroup > p:has(+ :is(h1, h2)) {
+  display: inline-block;
+  margin-bottom: 1.125rem;
+  padding: .3rem .85rem;
+  border-radius: 999px;
+  background: var(--tone);
+  color: var(--on-tone);
+  font-size: .8125rem;
+  font-weight: 600;
+}
+
+/* Header: the logo sits on a pastel tile; menu items get a pill when active. */
+body > header { border-bottom-color: transparent; }
+.logo { font-size: 1.1875rem; letter-spacing: -.02em; }
+.logo svg {
+  width: 2.25rem; height: 2.25rem; padding: .375rem;
+  border-radius: 12px;
+  background: var(--tone); color: var(--on-tone);
+}
+@media (min-width: 1081px) {
+  #menu { gap: .25rem; }
+  #menu a:not(.btn) { padding: .5rem .9rem; border-radius: 999px; }
+  #menu a:not(.btn):hover { background: color-mix(in srgb, var(--ink) 6%, transparent); }
+  #menu a[aria-current] { background: var(--tone); color: var(--on-tone); text-decoration: none; }
+  #menu li:has(.btn) { margin-left: .5rem; }
+  #menu li:has(.btn) + li:has(.btn) { margin-left: .25rem; }
+}
+
+/* Buttons: tonal by default, deep blue for the main action, violet for the demo. */
+.btn {
+  border: 0;
+  background: var(--tone);
+  color: var(--on-tone);
+  padding-inline: 1.375rem;
+  transition: background-color .15s, box-shadow .15s;
+}
+.btn:hover { background: color-mix(in srgb, var(--tone) 88%, var(--on-tone)); }
+.btn.primary { background: var(--accent); color: var(--on-accent); }
+.btn.primary:hover { background: color-mix(in srgb, var(--accent) 88%, var(--on-accent)); box-shadow: 0 2px 8px -2px rgb(0 0 0 / .3); }
+.btn.demo { background: var(--vivid); color: var(--on-vivid); }
+.btn.demo:hover { background: color-mix(in srgb, var(--vivid) 88%, var(--on-vivid)); box-shadow: 0 2px 8px -2px rgb(0 0 0 / .3); }
+
+/* Cards: filled panels without outlines that lift a little on hover. */
+:is(.cols-2, .cols-3, .cols-4) > article {
+  border-color: transparent;
+  transition: box-shadow .2s, background-color .2s;
+}
+article:has(:is(h2, h3) a:hover) {
+  border-color: transparent;
+  background: color-mix(in srgb, var(--surface) 90%, var(--accent));
+  box-shadow: 0 10px 28px -14px rgb(15 35 80 / .35);
+}
+main > section.tinted { border-block: 0; }
+:is(.cols-2, .cols-3, .cols-4) > div > h3 { border-top: 1px solid var(--line); }
+
+/* Numbered steps: the number in a pastel circle. */
+ol.steps > li { padding-top: 0; border-top: 0; }
+ol.steps > li::before {
+  display: grid; place-items: center;
+  width: 2.75rem; height: 2.75rem;
+  margin-bottom: 1.125rem;
+  border-radius: 50%;
+  background: var(--tone); color: var(--on-tone);
+  font: 600 1.0625rem/1 var(--font-body);
+}
+
+/* Pictures. */
+.hero figure img { border: 0; box-shadow: 0 24px 60px -28px rgb(15 35 80 / .45); }
+
+/* Code: pastel for words in a sentence, a soft panel for commands. */
+code, pre { font-family: var(--font-code); }
+:not(pre) > code {
+  padding: .1em .4em;
+  border-radius: 6px;
+  background: var(--tone);
+  color: var(--on-tone);
+  font-size: .85em;
+}
+pre { border-color: var(--line); border-radius: 14px; background: var(--surface); font-size: .9375rem; line-height: 1.6; }
+pre code { font-size: inherit; }
+main > section.tinted pre { background: var(--paper); }
+details { border-color: var(--line); }

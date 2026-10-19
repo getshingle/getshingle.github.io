@@ -1,0 +1,40 @@
+# Builds the template, every extension, theme and example on Linux, macOS and
+# Windows. On macOS it uses the bash 3.2 that comes with every Mac.
+# Runs on every push here; run it by hand from Actions → Test → Run workflow.
+name: Test
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  test:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          path: getshingle.github.io
+      - uses: actions/checkout@v6
+        with:
+          repository: getshingle/shingle
+          path: shingle
+      - uses: actions/checkout@v6
+        with:
+          repository: getshingle/extensions
+          path: extensions
+      - uses: actions/checkout@v6
+        with:
+          repository: getshingle/themes
+          path: themes
+      - name: Build and check
+        shell: bash
+        run: |
+          if [ "$RUNNER_OS" = macOS ]; then /bin/bash getshingle.github.io/tools/test.sh; else bash getshingle.github.io/tools/test.sh; fi
+      - name: Check the shell code
+        if: runner.os == 'Linux'
+        run: shellcheck -x shingle/build.sh extensions/*.sh extensions/*/extension.sh getshingle.github.io/tools/*.sh

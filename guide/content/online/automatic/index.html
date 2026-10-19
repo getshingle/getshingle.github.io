@@ -1,0 +1,62 @@
+---
+title: Let the internet build it
+description: Keep the whole Shingle folder on GitHub and let Cloudflare or GitHub run build.sh for you on every change.
+---
+<article>
+  <nav aria-label="Breadcrumb"><a href="/online/">Put it online</a></nav>
+  <hgroup>
+    <p>Step 4, for later</p>
+    <h1>Let the internet build it</h1>
+    <p>So far you build on your computer and push <code>dist</code>. Instead, you can keep the whole <code>shingle</code> folder on GitHub and let the internet run <code>bash build.sh</code>. Then you can even edit a page on github.com, and the website updates itself.</p>
+  </hgroup>
+
+  <h2>1. Keep the whole folder on GitHub</h2>
+  <p>In GitHub Desktop, add the <code>shingle</code> folder itself (not <code>dist</code>) as a repository and publish it. Shingle already tells Git to leave out <code>dist</code>, because the internet will make it.</p>
+
+  <h2>2a. With Cloudflare Pages</h2>
+  <p>Connect the repository as in <a href="/online/cloudflare/">step 3</a>, but with these settings:</p>
+  <ul>
+    <li>Build command: <code>bash build.sh</code></li>
+    <li>Build output directory: <code>dist</code></li>
+  </ul>
+  <p>Cloudflare runs the same command you run at home, on every push.</p>
+
+  <h2>2b. Or with GitHub Pages</h2>
+  <p>GitHub can build and show the website itself, with a small instruction file called a workflow.</p>
+  <ol>
+    <li>On github.com, open your repository's <strong>Settings → Pages</strong> and set <strong>Source</strong> to <strong>GitHub Actions</strong>.</li>
+    <li>Go back to the repository's main page and choose <strong>Add file → Create new file</strong>.</li>
+    <li>As the file name, type <code>.github/workflows/build.yml</code>. Each <code>/</code> makes a folder.</li>
+    <li>Paste this text into the big box:
+<pre><code>name: Build the website
+on:
+  push:
+    branches: [main]
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v6
+      - run: bash build.sh
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v4
+        with:
+          path: dist
+      - id: deployment
+        uses: actions/deploy-pages@v4</code></pre></li>
+    <li>Click <strong>Commit changes</strong>.</li>
+  </ol>
+  <p>The <strong>Actions</strong> tab shows each build. When it is green, your website is online at <code>your-name.github.io/your-repository/</code>. Shingle's links work at such an address too; set it as <code>SITE_URL</code> in <code>site.conf</code>.</p>
+  <p>The next time you open GitHub Desktop, click <strong>Pull origin</strong>, so the new file is on your computer too.</p>
+
+  <div class="actions">
+    <a class="btn" href="/online/">All steps</a>
+  </div>
+</article>

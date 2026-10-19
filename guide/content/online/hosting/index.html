@@ -1,0 +1,39 @@
+---
+title: Your own web host
+description: Upload the contents of the dist folder to any web host with its file manager or with FTP.
+---
+<article>
+  <nav aria-label="Breadcrumb"><a href="/online/">Put it online</a></nav>
+  <hgroup>
+    <p>Step 1</p>
+    <h1>Your own web host</h1>
+    <p>Any web host can show a Shingle website: the one that came with your domain, your internet provider's web space, or a friend's server.</p>
+  </hgroup>
+
+  <h2>1. Build</h2>
+  <p>Set <code>SITE_URL</code> in <code>site.conf</code> to your address, then run <code>bash build.sh</code>.</p>
+
+  <h2>2. Upload what is inside dist</h2>
+  <p>Your host gives you a folder for your website, often called <code>public_html</code>, <code>www</code> or <code>htdocs</code>. Copy everything that is <strong>inside</strong> <code>dist</code> into it, so that <code>index.html</code> sits directly in that folder.</p>
+  <ul>
+    <li><strong>With the host's file manager:</strong> log in to your hosting account, open the file manager, go to the website folder and upload the files.</li>
+    <li><strong>With FTP:</strong> install <a href="https://filezilla-project.org">FileZilla</a>, connect with the FTP details from your host, and drag the contents of <code>dist</code> into the website folder.</li>
+  </ul>
+
+  <h2>3. Open your address</h2>
+  <p>Your website is online. Each time you change something: build, then upload the contents of <code>dist</code> again.</p>
+
+  <details>
+    <summary>Shorter addresses (optional)</summary>
+    <p>Out of the box, links look like <code>about/index.html</code>, so the website also opens straight from your computer. On a web host you can switch to shorter addresses such as <code>/about/</code>: set <code>LINKS="web"</code> in <code>site.conf</code> and build again. Pages then only work through a web server, not with a double click.</p>
+  </details>
+  <details>
+    <summary>The "page not found" page</summary>
+    <p>Shingle makes <code>404.html</code>. Many hosts show it for wrong addresses by themselves. If yours does not, look for "custom error pages" in your hosting settings and choose <code>404.html</code>.</p>
+  </details>
+
+  <div class="actions">
+    <a class="btn" href="/online/">All steps</a>
+    <a class="btn primary" href="/online/github/">Next: keep it on GitHub</a>
+  </div>
+</article>

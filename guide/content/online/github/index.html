@@ -1,0 +1,41 @@
+---
+title: Keep it on GitHub
+description: Save every version of your website on GitHub, for free, with GitHub Desktop.
+---
+<article>
+  <nav aria-label="Breadcrumb"><a href="/online/">Put it online</a></nav>
+  <hgroup>
+    <p>Step 2</p>
+    <h1>Keep it on GitHub</h1>
+    <p>GitHub stores your website for free and keeps every version. In the next step, Cloudflare takes it from there and puts it online.</p>
+  </hgroup>
+
+  <p>You will store only the <code>dist</code> folder, the finished website, on GitHub. Your <code>shingle</code> folder stays on your computer.</p>
+
+  <h2>Once: set it up</h2>
+  <ol>
+    <li>Make a free account on <a href="https://github.com">github.com</a>.</li>
+    <li>Install <a href="https://desktop.github.com">GitHub Desktop</a> and sign in with that account.</li>
+    <li>Run <code>bash build.sh</code>, so that <code>dist</code> exists.</li>
+    <li>In GitHub Desktop, choose <strong>File → Add local repository</strong> and pick the <code>dist</code> folder inside <code>shingle</code>. It says this is not a repository yet: choose <strong>create a repository</strong>, then <strong>Create repository</strong>.</li>
+    <li>Click <strong>Publish repository</strong>. Give it a name, for example <code>my-website</code>. Keep it private if you like; Cloudflare can read private repositories too.</li>
+  </ol>
+
+  <h2>Every time you change something</h2>
+  <ol>
+    <li>Run <code>bash build.sh</code>.</li>
+    <li>Open GitHub Desktop. It lists the changed files.</li>
+    <li>Write a few words about the change in the box at the bottom left, click <strong>Commit to main</strong>, then <strong>Push origin</strong>.</li>
+  </ol>
+  <p>Shingle empties <code>dist</code> on every build but keeps its hidden <code>.git</code> folder, so GitHub Desktop always sees exactly what changed.</p>
+
+  <details>
+    <summary>Using your own domain with GitHub Pages instead of Cloudflare</summary>
+    <p>GitHub can also show the website itself: in the repository on github.com, open <strong>Settings → Pages</strong>, choose <strong>Deploy from a branch</strong>, the branch <code>main</code> and the folder <code>/ (root)</code>. For your own domain, put a file called <code>CNAME</code> with your domain in Shingle's <code>static/</code> folder, so every build keeps it.</p>
+  </details>
+
+  <div class="actions">
+    <a class="btn" href="/online/">All steps</a>
+    <a class="btn primary" href="/online/cloudflare/">Next: free hosting with Cloudflare</a>
+  </div>
+</article>

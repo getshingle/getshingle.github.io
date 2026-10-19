@@ -106,6 +106,9 @@ build
 check "leaves drafts out" missing dist/blog/draft-note/index.html
 build preview
 check "preview builds drafts" exists dist/blog/draft-note/index.html
+mv "$SITE_DIR/extensions/collection.css" "$WORK/collection.css"
+check "says where collection.css goes when it is missing" fails_with "Put them straight into extensions/"
+mv "$WORK/collection.css" "$SITE_DIR/extensions/"
 
 echo "Markdown:"
 printf -- '---\ntitle: Notes\n---\nSome *notes*.\n' > "$SITE_DIR/content/notes.md"

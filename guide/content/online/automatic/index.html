@@ -32,10 +32,14 @@ description: Keep the whole Shingle folder on GitHub and let Cloudflare or GitHu
 on:
   push:
     branches: [main]
+  workflow_dispatch:
 permissions:
   contents: read
   pages: write
   id-token: write
+concurrency:
+  group: pages
+  cancel-in-progress: false
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -45,15 +49,15 @@ jobs:
     steps:
       - uses: actions/checkout@v6
       - run: bash build.sh
-      - uses: actions/configure-pages@v5
-      - uses: actions/upload-pages-artifact@v4
+      - uses: actions/configure-pages@v6
+      - uses: actions/upload-pages-artifact@v5
         with:
           path: dist
       - id: deployment
-        uses: actions/deploy-pages@v4</code></pre></li>
+        uses: actions/deploy-pages@v5</code></pre></li>
     <li>Click <strong>Commit changes</strong>.</li>
   </ol>
-  <p>The <strong>Actions</strong> tab shows each build. When it is green, your website is online at <code>your-name.github.io/your-repository/</code>. Shingle's links work at such an address too; set it as <code>SITE_URL</code> in <code>site.conf</code>.</p>
+  <p>The <strong>Actions</strong> tab shows each build; there you can also start one by hand with <strong>Run workflow</strong>. When it is green, your website is online at <code>your-name.github.io/your-repository/</code>. Shingle's links work at such an address too; set it as <code>SITE_URL</code> in <code>site.conf</code>.</p>
   <p>The next time you open GitHub Desktop, click <strong>Pull origin</strong>, so the new file is on your computer too.</p>
 
   <div class="actions">

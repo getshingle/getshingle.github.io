@@ -11,9 +11,10 @@ permissions:
   contents: read
   pages: write
   id-token: write
+# One deployment at a time; a running one always finishes (as GitHub advises).
 concurrency:
   group: pages
-  cancel-in-progress: true
+  cancel-in-progress: false
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -40,9 +41,9 @@ jobs:
         run: bash getshingle.github.io/tools/test.sh
       - name: Build the website
         run: bash getshingle.github.io/tools/website.sh
-      - uses: actions/configure-pages@v5
-      - uses: actions/upload-pages-artifact@v4
+      - uses: actions/configure-pages@v6
+      - uses: actions/upload-pages-artifact@v5
         with:
           path: getshingle.github.io/_site
       - id: deployment
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@v5

@@ -1,0 +1,60 @@
+---
+title: Business extension
+description: Your opening hours on your pages, and your business details for Google and maps: name, address, phone, hours and social links.
+---
+<article>
+  <nav aria-label="Breadcrumb"><a href="/extras/extensions/">Extensions</a></nav>
+  <hgroup>
+    <p>Extension</p>
+    <h1>Business</h1>
+    <p>Your opening hours on your pages, and your business details for Google and maps: name, address, phone, hours and social links.</p>
+  </hgroup>
+  <div class="actions">
+    <a class="btn primary" href="/downloads/extension-business.zip">Download</a>
+    <a class="btn" href="/demo/extensions/contact/" target="_blank" rel="noopener">See it ↗</a>
+  </div>
+
+  <figure><img src="/img/extensions/business.jpg" alt="Opening hours on the demo's contact page: Monday to Friday 9:00 to 17:30" width="1200" height="750"></figure>
+
+  <h2>What it is for</h2>
+  <p>Every shop, restaurant, practice and workshop. People look for your hours more than for anything else, and search engines show them next to your name when they know them.</p>
+
+  <h2>Your hours and details</h2>
+  <p>They go into <code>content/business/_index.html</code>, which is not a page:</p>
+  <pre><code>---
+type: Dentist
+monday: 8:00-18:00
+tuesday: 8:00-18:00
+wednesday: 8:00-12:00, 14:00-19:00
+thursday: 8:00-18:00
+friday: 8:00-14:00
+saturday: closed
+sunday: closed
+hours_note: Closed on public holidays.
+street: 12 Harbour Lane
+postal_code: RV1 4AB
+city: Riverton
+country: GB
+---</code></pre>
+  <p><code>type</code> is what search engines should call you, such as <code>Restaurant</code>, <code>Dentist</code>, <code>HairSalon</code> or <code>Store</code>; the README lists many more. Your name, phone and social links come from <code>site.conf</code>.</p>
+
+  <h2>On your pages</h2>
+  <ul>
+    <li><code>&#123;&#123;OPENING_HOURS}</code>: a table of your hours, for example on the contact page.</li>
+    <li><code>&#123;&#123;OPENING_HOURS_TEXT}</code>: the same in one line. In <code>site.conf</code>, <code>FOOTER_TEXT="Open &#123;&#123;OPENING_HOURS_TEXT}}."</code> shows it at the bottom of every page.</li>
+    <li><code>&#123;&#123;MAP_URL}</code>: a link to your place on a map.</li>
+  </ul>
+
+  <h2>Add it</h2>
+  <ol>
+    <li>Download <a href="/downloads/extension-business.zip">extension-business.zip</a> and unzip it. Move the folder <code>business</code> into the <code>extensions</code> folder of your website.</li>
+    <li>Run <code>bash build.sh</code>. The first time, the build adds <code>content/business/_index.html</code>, where your hours and details go, and tells you so.</li>
+    <li>Change the examples to your own and build again.</li>
+  </ol>
+  <p>The extension's <a href="https://github.com/getshingle/extensions/tree/main/business#readme">README</a>, also in the download, explains every field and how to change the look.</p>
+
+  <div class="actions">
+    <a class="btn" href="/extras/extensions/">All extensions</a>
+    <a class="btn" href="/extras/business/">Start from your business</a>
+  </div>
+</article>

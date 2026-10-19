@@ -1,0 +1,45 @@
+---
+title: Gallery extension
+description: Photo albums, each with its own page, and photos on the gallery page itself. A photo opens large over the page; the arrow keys go to the next one.
+---
+<article>
+  <nav aria-label="Breadcrumb"><a href="/extras/extensions/">Extensions</a></nav>
+  <hgroup>
+    <p>Extension</p>
+    <h1>Gallery</h1>
+    <p>Photo albums, each with its own page, and photos on the gallery page itself. A photo opens large over the page; the arrow keys go to the next one.</p>
+  </hgroup>
+  <div class="actions">
+    <a class="btn primary" href="/downloads/extension-gallery.zip">Download</a>
+    <a class="btn" href="/demo/extensions/gallery/" target="_blank" rel="noopener">See it ↗</a>
+  </div>
+
+  <figure><img src="/img/extensions/gallery.jpg" alt="An album in the demo: four photos of a house in a grid, with captions" width="1200" height="750"></figure>
+
+  <h2>What it is for</h2>
+  <p>Restaurants and hotels show their rooms, photographers their weddings, builders their work before and after, salons their results. Good photos sell more than any text.</p>
+
+  <h2>Add photos</h2>
+  <pre><code>content/gallery/garden.jpg                          on the gallery page
+content/gallery/01_summer-wedding/index.html        an album → /gallery/summer-wedding/
+content/gallery/01_summer-wedding/01_ceremony.jpg   its photos, in the order of their names
+content/gallery/01_summer-wedding/01_ceremony.txt   a caption, if you like</code></pre>
+  <p>The album's <code>index.html</code> has its <code>title</code> and a one-line <code>summary</code>. Its cover is <code>cover.jpg</code>, or else its first photo.</p>
+  <ul>
+    <li><strong>Name your photos with words:</strong> <code>ceremony-under-the-oak.jpg</code> becomes the description "Ceremony under the oak" for people who cannot see it. A caption file replaces it.</li>
+    <li><strong>Make them smaller first:</strong> 2000 pixels on the long side is plenty. Photos straight from a camera make the page slow.</li>
+  </ul>
+
+  <h2>Add it</h2>
+  <ol>
+    <li>Download <a href="/downloads/extension-gallery.zip">extension-gallery.zip</a> and unzip it. Move the folder <code>gallery</code> and the two files <code>collection.sh</code> and <code>collection.css</code> into the <code>extensions</code> folder of your website. If your computer asks whether to replace the two files, say yes.</li>
+    <li>Run <code>bash build.sh</code>. The first time, the build adds example photos in <code>content/gallery/</code> and a Gallery link to the menu, and tells you so.</li>
+    <li>Change the examples to your own and build again.</li>
+  </ol>
+  <p>The extension's <a href="https://github.com/getshingle/extensions/tree/main/gallery#readme">README</a>, also in the download, explains every field and how to change the look.</p>
+
+  <div class="actions">
+    <a class="btn" href="/extras/extensions/">All extensions</a>
+    <a class="btn" href="/extras/business/">Start from your business</a>
+  </div>
+</article>

@@ -1,0 +1,49 @@
+---
+title: Team extension
+description: A card for each person, and a page for each with their photo, their story, contact details and social links.
+---
+<article>
+  <nav aria-label="Breadcrumb"><a href="/extras/extensions/">Extensions</a></nav>
+  <hgroup>
+    <p>Extension</p>
+    <h1>Team</h1>
+    <p>A card for each person, and a page for each with their photo, their story, contact details and social links.</p>
+  </hgroup>
+  <div class="actions">
+    <a class="btn primary" href="/downloads/extension-team.zip">Download</a>
+    <a class="btn" href="/demo/extensions/team/" target="_blank" rel="noopener">See it ↗</a>
+  </div>
+
+  <figure><img src="/img/extensions/team.jpg" alt="The team page of the demo: portrait cards with names, roles and social links" width="1200" height="750"></figure>
+
+  <h2>What it is for</h2>
+  <p>People choose people: a doctor, a lawyer, a teacher, a trainer. Show who they will meet, with a real photo and a few words of their own.</p>
+
+  <h2>Add a person</h2>
+  <pre><code>content/team/001_anna-berg/index.html   → /team/anna-berg/, first on the team page
+content/team/001_anna-berg/photo.jpg    a portrait, 4:5 (for example 800 × 1000)
+content/team/004_james-okafor.html      no photo: their initials are shown</code></pre>
+  <pre><code>---
+title: Anna Berg
+role: Founder and principal architect
+summary: One sentence for the team page.
+phone: +1 555 0110
+email: anna@example.com
+linkedin: https://www.linkedin.com/in/…
+---
+&lt;p&gt;Their story.&lt;/p&gt;</code></pre>
+  <p>Leave out any field you do not need. Email addresses are hidden from spam robots.</p>
+
+  <h2>Add it</h2>
+  <ol>
+    <li>Download <a href="/downloads/extension-team.zip">extension-team.zip</a> and unzip it. Move the folder <code>team</code> and the two files <code>collection.sh</code> and <code>collection.css</code> into the <code>extensions</code> folder of your website. If your computer asks whether to replace the two files, say yes.</li>
+    <li>Run <code>bash build.sh</code>. The first time, the build adds example people in <code>content/team/</code> and a Team link to the menu, and tells you so.</li>
+    <li>Change the examples to your own and build again.</li>
+  </ol>
+  <p>The extension's <a href="https://github.com/getshingle/extensions/tree/main/team#readme">README</a>, also in the download, explains every field and how to change the look.</p>
+
+  <div class="actions">
+    <a class="btn" href="/extras/extensions/">All extensions</a>
+    <a class="btn" href="/extras/business/">Start from your business</a>
+  </div>
+</article>

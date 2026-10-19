@@ -1,0 +1,57 @@
+---
+title: Pricing extension
+description: Plans or packages side by side, with one that stands out and, if you like, a switch between monthly and yearly prices.
+---
+<article>
+  <nav aria-label="Breadcrumb"><a href="/extras/extensions/">Extensions</a></nav>
+  <hgroup>
+    <p>Extension</p>
+    <h1>Pricing</h1>
+    <p>Plans or packages side by side, with one that stands out and, if you like, a switch between monthly and yearly prices.</p>
+  </hgroup>
+  <div class="actions">
+    <a class="btn primary" href="/downloads/extension-pricing.zip">Download</a>
+    <a class="btn" href="/demo/stillwater/pricing/" target="_blank" rel="noopener">See it ↗</a>
+  </div>
+
+  <figure><img src="/img/extensions/pricing.jpg" alt="The prices page of the yoga studio example: three plans and a monthly or yearly switch" width="1200" height="750"></figure>
+
+  <h2>What it is for</h2>
+  <p>Memberships and subscriptions, software plans, and packages of a photographer, a coach, a cleaner or an agency. Two to four plans fit side by side; on a phone they stack.</p>
+
+  <h2>Write a plan</h2>
+  <p>One file per plan in <code>content/pricing/</code>; the number at the start sets the order.</p>
+  <pre><code>---
+title: Unlimited
+summary: As many classes as you like.
+price: €89
+period: per month
+price_yearly: €74
+period_yearly: per month, paid yearly
+featured: true
+badge: Best value
+button: Start today
+link: /contact/
+---
+&lt;ul&gt;
+  &lt;li&gt;Every class, every day&lt;/li&gt;
+  &lt;li&gt;Bring a friend once a month&lt;/li&gt;
+&lt;/ul&gt;</code></pre>
+  <p>The list becomes the plan's features, each with a check mark. When one plan has a <code>price_yearly</code>, a Monthly/Yearly switch appears above the plans. <code>featured: true</code> gives a plan a frame and a filled button.</p>
+
+  <h2>On other pages</h2>
+  <p><code>&#123;&#123;PRICING}</code> shows the plans on any page, such as your home page. Text below the plans, such as "All prices include tax" or your questions about prices, goes into <code>content/pricing/_index.html</code>.</p>
+
+  <h2>Add it</h2>
+  <ol>
+    <li>Download <a href="/downloads/extension-pricing.zip">extension-pricing.zip</a> and unzip it. Move the folder <code>pricing</code> and the two files <code>collection.sh</code> and <code>collection.css</code> into the <code>extensions</code> folder of your website. If your computer asks whether to replace the two files, say yes.</li>
+    <li>Run <code>bash build.sh</code>. The first time, the build adds example plans in <code>content/pricing/</code> and a Pricing link to the menu, and tells you so.</li>
+    <li>Change the examples to your own and build again.</li>
+  </ol>
+  <p>The extension's <a href="https://github.com/getshingle/extensions/tree/main/pricing#readme">README</a>, also in the download, explains every field and how to change the look.</p>
+
+  <div class="actions">
+    <a class="btn" href="/extras/extensions/">All extensions</a>
+    <a class="btn" href="/extras/business/">Start from your business</a>
+  </div>
+</article>

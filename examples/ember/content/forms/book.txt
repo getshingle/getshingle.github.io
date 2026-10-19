@@ -1,0 +1,10 @@
+---
+title: Your request
+---
+Your name | text | required
+Email | email | required
+Phone | tel
+Date | date | required
+Time | select | required | 12:30, 13:30, 17:30, 18:30, 19:30, 20:30, 21:30
+Guests | select | required | 1, 2, 3, 4, 5, 6, 7, 8, The long table (9 to 14)
+Allergies or anything else we should know | textarea

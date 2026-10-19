@@ -46,6 +46,17 @@ $BANNER|" -e 's|^<head>$|<head>\
   done < <(find "$OUT/$1" -name '*.html' -print0)
 }
 
+# Replace a list in site.conf, such as MENU, with new lines.
+set_list() {   # set_list <site.conf> <list> <"Label|/address/">…
+  local conf=$1 list=$2
+  shift 2
+  awk -v list="$list" -v items="$(printf '  "%s"\n' "$@")" '
+    index($0, list "=(") == 1 { print list "=("; print items; skip = 1; next }
+    skip && /^\)/ { skip = 0 }
+    !skip { print }' "$conf" > "$conf.new"
+  mv "$conf.new" "$conf"
+}
+
 demo() {   # demo <website folder> <name>
   publish "$1" "demo/$2"
   mark_demo "demo/$2"
@@ -63,8 +74,25 @@ publish "$WORK/guide" ''
 fresh "$WORK/atrium"
 demo "$WORK/atrium" atrium
 
+# Atrium with the extensions that suit it (menu and schedule have their own
+# examples). The first build adds their examples; then the menu is shortened
+# and values such as {{TESTIMONIALS}} are added to the home and contact pages.
 fresh "$WORK/extensions"
-for name in blog portfolio news team careers privacy sitemap; do add_extension "$WORK/extensions" "$name"; done
+for name in blog portfolio news team careers privacy sitemap business services faq testimonials \
+  gallery pricing downloads forms embed; do
+  add_extension "$WORK/extensions" "$name"
+done
+if command -v cmark-gfm > /dev/null || command -v cmark > /dev/null; then
+  add_extension "$WORK/extensions" markdown
+else
+  echo "  (no cmark-gfm: the demo is built without the markdown extension)"
+fi
+(cd "$WORK/extensions" && bash build.sh > /dev/null)
+set_list "$WORK/extensions/site.conf" MENU "About|/about/" "Services|/services/" "Projects|/portfolio/" \
+  "Gallery|/gallery/" "Blog|/blog/" "Team|/team/" "Pricing|/pricing/" "Contact|/contact/"
+set_list "$WORK/extensions/site.conf" LEGAL "News|/news/" "Careers|/careers/" "FAQ|/faq/" \
+  "Downloads|/downloads/" "Privacy policy|/privacy/"
+for file in "$SITE"/demo/extensions/*.html; do cat "$file" >> "$WORK/extensions/content/${file##*/}"; done
 demo "$WORK/extensions" extensions
 
 for dir in "$THEMES"/*/; do

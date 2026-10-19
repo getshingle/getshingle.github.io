@@ -1,0 +1,50 @@
+---
+title: Portfolio extension
+description: Your projects, each with a case study page: the client, the year, the place, and the story with pictures. Or a simple list of clients and references.
+---
+<article>
+  <nav aria-label="Breadcrumb"><a href="/extras/extensions/">Extensions</a></nav>
+  <hgroup>
+    <p>Extension</p>
+    <h1>Portfolio</h1>
+    <p>Your projects, each with a case study page: the client, the year, the place, and the story with pictures. Or a simple list of clients and references.</p>
+  </hgroup>
+  <div class="actions">
+    <a class="btn primary" href="/downloads/extension-portfolio.zip">Download</a>
+    <a class="btn" href="/demo/extensions/portfolio/" target="_blank" rel="noopener">See it ↗</a>
+  </div>
+
+  <figure><img src="/img/extensions/portfolio.jpg" alt="The projects page of the demo: cards with a picture, the client and the year" width="1200" height="750"></figure>
+
+  <h2>What it is for</h2>
+  <p>Architects, designers, agencies, builders and consultants: show what you have done, and let each project tell its story. Investors can list their companies the same way.</p>
+
+  <h2>Write a project</h2>
+  <pre><code>content/portfolio/001_riverside-house/index.html   → /portfolio/riverside-house/
+content/portfolio/001_riverside-house/cover.jpg    the main picture</code></pre>
+  <pre><code>---
+title: Riverside House
+client: The Lind family
+year: 2025
+location: Riverton
+services: Architecture, interiors
+summary: One or two sentences for the card and link previews.
+cover_alt: What the cover picture shows
+---
+&lt;h2&gt;The challenge&lt;/h2&gt;
+&lt;p&gt;The case study: the challenge, what you did, the result.&lt;/p&gt;</code></pre>
+  <p>Only a list, without a page for each project? Write <code>pages: false</code> in <code>content/portfolio/_index.html</code>.</p>
+
+  <h2>Add it</h2>
+  <ol>
+    <li>Download <a href="/downloads/extension-portfolio.zip">extension-portfolio.zip</a> and unzip it. Move the folder <code>portfolio</code> and the two files <code>collection.sh</code> and <code>collection.css</code> into the <code>extensions</code> folder of your website. If your computer asks whether to replace the two files, say yes.</li>
+    <li>Run <code>bash build.sh</code>. The first time, the build adds example projects in <code>content/portfolio/</code> and a Projects link to the menu, and tells you so.</li>
+    <li>Change the examples to your own and build again.</li>
+  </ol>
+  <p>The extension's <a href="https://github.com/getshingle/extensions/tree/main/portfolio#readme">README</a>, also in the download, explains every field and how to change the look.</p>
+
+  <div class="actions">
+    <a class="btn" href="/extras/extensions/">All extensions</a>
+    <a class="btn" href="/extras/business/">Start from your business</a>
+  </div>
+</article>

@@ -1,0 +1,8 @@
+---
+title: Your free first class
+---
+Your name | text | required
+Email | email | required
+Which class? | select | required | Vinyasa flow, Yin yoga, Yoga for beginners, Pilates
+Which day? | select | Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday
+Anything we should know? | textarea

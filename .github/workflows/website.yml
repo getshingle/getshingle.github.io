@@ -37,6 +37,10 @@ jobs:
         with:
           repository: getshingle/themes
           path: themes
+      # For the markdown extension: its tests and its demo. If it cannot be
+      # installed, the tests check the message instead and the demo goes without.
+      - name: Install cmark-gfm
+        run: sudo apt-get update -q && sudo apt-get install -y -q cmark-gfm || echo "cmark-gfm is not available"
       - name: Test
         run: bash getshingle.github.io/tools/test.sh
       - name: Build the website

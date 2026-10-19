@@ -1,0 +1,55 @@
+---
+title: Forms extension
+description: Contact, booking and quote forms for your pages. A form service receives the messages and emails them to you; many have a free plan for a small website.
+---
+<article>
+  <nav aria-label="Breadcrumb"><a href="/extras/extensions/">Extensions</a></nav>
+  <hgroup>
+    <p>Extension</p>
+    <h1>Forms</h1>
+    <p>Contact, booking and quote forms for your pages. A form service receives the messages and emails them to you; many have a free plan for a small website.</p>
+  </hgroup>
+  <div class="actions">
+    <a class="btn primary" href="/downloads/extension-forms.zip">Download</a>
+    <a class="btn" href="/demo/ember/contact/" target="_blank" rel="noopener">See it ↗</a>
+  </div>
+
+  <figure><img src="/img/extensions/forms.jpg" alt="The booking form of the restaurant example, with date, time and number of guests" width="1200" height="750"></figure>
+
+  <h2>What it is for</h2>
+  <p>Some people would rather write than call, at any hour. A form also asks for exactly what you need to answer: the date, the number of guests, the kind of project.</p>
+  <p>A website made of files cannot send email by itself. A form service such as <a href="https://formspree.io">Formspree</a> or <a href="https://web3forms.com">Web3Forms</a> does it for you: you create a free account and get an address for your form.</p>
+
+  <h2>Write a form</h2>
+  <p>One text file per form in <code>content/forms/</code>, one line per field: its label, its type and whether it is required.</p>
+  <pre><code>---
+title: Book a table
+---
+Your name | text | required
+Email | email | required
+Date | date | required
+Guests | select | required | 1, 2, 3, 4, 5, 6
+Anything we should know? | textarea</code></pre>
+  <p>Types: <code>text</code>, <code>email</code>, <code>tel</code>, <code>number</code>, <code>date</code>, <code>time</code>, <code>textarea</code>, <code>select</code>, <code>radio</code>, <code>checkbox</code> and <code>consent</code>, a box that must be ticked, with a link to your privacy policy.</p>
+
+  <h2>Show it and connect it</h2>
+  <ol>
+    <li>Put the form into a page with its name in capitals: <code>book.txt</code> is <code>&#123;&#123;FORM_BOOK}</code>.</li>
+    <li>Put your form service's address into <code>content/forms/_index.html</code>, after <code>action:</code>. The README shows the settings for Formspree and Web3Forms.</li>
+    <li>Build, put the website online and send yourself a test message.</li>
+  </ol>
+  <p>Until the address is there, the form says that it is not connected yet, instead of losing messages. For sensitive matters, such as health or legal problems, ask people to call you instead.</p>
+
+  <h2>Add it</h2>
+  <ol>
+    <li>Download <a href="/downloads/extension-forms.zip">extension-forms.zip</a> and unzip it. Move the folder <code>forms</code> into the <code>extensions</code> folder of your website.</li>
+    <li>Run <code>bash build.sh</code>. The first time, the build adds an example contact form in <code>content/forms/</code>, and tells you so.</li>
+    <li>Change the examples to your own and build again.</li>
+  </ol>
+  <p>The extension's <a href="https://github.com/getshingle/extensions/tree/main/forms#readme">README</a>, also in the download, explains every field and how to change the look.</p>
+
+  <div class="actions">
+    <a class="btn" href="/extras/extensions/">All extensions</a>
+    <a class="btn" href="/extras/business/">Start from your business</a>
+  </div>
+</article>

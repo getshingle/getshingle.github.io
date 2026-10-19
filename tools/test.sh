@@ -110,23 +110,93 @@ mv "$SITE_DIR/extensions/collection.css" "$WORK/collection.css"
 check "says where collection.css goes when it is missing" fails_with "Put them straight into extensions/"
 mv "$WORK/collection.css" "$SITE_DIR/extensions/"
 
+echo "Extensions on your pages:"
+cat > "$SITE_DIR/content/values.html" <<'EOF'
+---
+title: Values
+---
+<section>
+{{OPENING_HOURS}}
+<p><a href="{{MAP_URL}}">Map</a></p>
+{{FAQ_FEES}}
+{{SERVICES}}
+{{TESTIMONIALS}}
+{{PRICING}}
+{{SCHEDULE}}
+{{DOWNLOADS}}
+{{FORM_CONTACT}}
+{{EMBED_MAP}}
+{{EMBED_VIDEO}}
+</section>
+EOF
+sed 's|^FOOTER_TEXT=.*|FOOTER_TEXT="Open {{OPENING_HOURS_TEXT}}."|' "$SITE_DIR/site.conf" > "$WORK/conf" && mv "$WORK/conf" "$SITE_DIR/site.conf"
+build
+check "the services extension wins over content/services.html" grep -q "Not used: content/services.html" "$WORK/log"
+check "adds no second link to /services/" test "$(grep -c '|/services/"' "$SITE_DIR/site.conf")" -eq 1
+check "builds a service" exists dist/services/new-homes/index.html
+check "shows the opening hours" has dist/values/index.html '<th scope="row">Monday–Friday</th><td>9:00–17:30</td>'
+check "shows the hours in FOOTER_TEXT" has dist/about/index.html 'Open Monday–Friday 9:00–17:30.'
+check "links to a map" has dist/values/index.html 'maps/search/?api=1&amp;query=12+Harbour+Lane'
+check "describes the business for search engines" has dist/index.html '"openingHoursSpecification"'
+check "builds the FAQ page" has dist/faq/index.html '"@type": "FAQPage"'
+check "shows the questions of one topic" has dist/values/index.html 'id="first-meeting"'
+check "leaves out the other topics" lacks dist/values/index.html 'id="do-i-need-a-permit"'
+check "shows the services" has dist/values/index.html 'class="cols-3 services"'
+check "shows three testimonials" test "$(grep -c '<blockquote>' "$SITE_DIR/dist/values/index.html")" -eq 3
+check "builds a gallery album" exists dist/gallery/riverside-house/02_living-room.jpg
+check "uses the first photo as the cover" has dist/gallery/index.html 'riverside-house/01_from-the-river.jpg'
+check "turns a text file into a caption" has dist/gallery/riverside-house/index.html '<figcaption>The living room'
+check "does not publish caption files" missing dist/gallery/riverside-house/02_living-room.txt
+check "builds the menu" has dist/menu/index.html '<p class="price">9.50</p>'
+check "shows a dish's tags" has dist/menu/index.html '<span class="tag">VG</span><span class="tag">GF</span>'
+check "shows seven days" test "$(grep -c 'class="day"' "$SITE_DIR/dist/values/index.html")" -eq 7
+check "builds the pricing page" has dist/pricing/index.html 'class="plan featured"'
+check "has no yearly switch without yearly prices" lacks dist/pricing/index.html 'name="billing"'
+check "lists the downloads" has dist/downloads/index.html '<h2>Checklists</h2>'
+check "publishes a download without its number" exists dist/downloads/project-brief.pdf
+check "shows a download's size" has dist/values/index.html 'PDF · [0-9]* KB'
+check "shows the form" has dist/values/index.html 'name="email" type="email" autocomplete="email" required'
+check "says the form has no service yet" grep -q "has no form service yet" "$WORK/log"
+check "shows an embed" has dist/values/index.html 'data-src="https://www.openstreetmap.org/export/embed.html'
+check "plays YouTube videos without cookies" has dist/values/index.html 'youtube-nocookie.com/embed/aqz-KE-bpKQ'
+printf 'price_yearly: €20\n' > "$WORK/yearly"
+sed '/^price: /r '"$WORK/yearly" "$SITE_DIR/content/pricing/1_advice-visit.html" > "$WORK/plan" && mv "$WORK/plan" "$SITE_DIR/content/pricing/1_advice-visit.html"
+sed 's|^action:.*|action: https://formspree.io/f/test|' "$SITE_DIR/content/forms/_index.html" > "$WORK/form" && mv "$WORK/form" "$SITE_DIR/content/forms/_index.html"
+build
+check "adds the yearly switch" has dist/pricing/index.html 'name="billing"'
+check "sends the form to the service" has dist/values/index.html 'action="https://formspree.io/f/test"'
+
 echo "Markdown:"
 printf -- '---\ntitle: Notes\n---\nSome *notes*.\n' > "$SITE_DIR/content/notes.md"
 check "stops at .md without the markdown extension" fails_with "written in Markdown"
 add_extension "$SITE_DIR" markdown
 if command -v cmark-gfm > /dev/null || command -v cmark > /dev/null; then
+  printf -- '---\ntitle: In Markdown\nsummary: A post.\n---\nA **bold** post.\n' > "$SITE_DIR/content/blog/2026-01-02_in-markdown.md"
+  printf -- '---\ntitle: Mark Down\nrole: Writer\n---\nShe writes *Markdown*.\n' > "$SITE_DIR/content/team/009_mark-down.md"
+  printf -- '---\ntitle: Is Markdown fine?\n---\nYes, *it is*.\n' > "$SITE_DIR/content/faq/09_markdown.md"
+  rm "$SITE_DIR"/content/news/_index.*
+  printf -- '---\ntitle: News\n---\nOur **news**.\n' > "$SITE_DIR/content/news/_index.md"
   build
   check "builds .md with the markdown extension" has dist/notes/index.html '<em>notes</em>'
+  check "puts a page's title on top" has dist/notes/index.html '<h1>Notes</h1>'
+  check "adds the example page" has dist/markdown/index.html '<figcaption>Morning light in the studio</figcaption>'
+  check "builds a blog post in Markdown" has dist/blog/in-markdown/index.html '<strong>bold</strong>'
+  check "builds a person in Markdown" has dist/team/mark-down/index.html '<em>Markdown</em>'
+  check "builds a question in Markdown" has dist/faq/index.html '<em>it is</em>'
+  check "builds an _index.md" has dist/news/index.html '<p>Our <strong>news</strong>.</p>'
+  check "does not give an _index.md a second title" test "$(grep -c '<h1>' "$SITE_DIR/dist/news/index.html")" -eq 1
 else
   check "says how to install cmark-gfm" fails_with "brew install cmark-gfm"
 fi
+rm -rf "$SITE_DIR/extensions/markdown" "$SITE_DIR/content/markdown"
+find "$SITE_DIR/content" -name '*.md' -exec rm {} +
+printf -- '---\ntitle: News\n---\n' > "$SITE_DIR/content/news/_index.html"
 
 echo "Themes:"
 for dir in "$THEMES"/*/; do
   name=${dir%/} && name=${name##*/}
   cp -R "${dir%/}" "$SITE_DIR/themes/"
   sed "s|^THEME=.*|THEME=\"$name\"|" "$SITE_DIR/site.conf" > "$WORK/conf" && mv "$WORK/conf" "$SITE_DIR/site.conf"
-  rm -f "$SITE_DIR/content/notes.md"
   build
   check "builds with $name" has dist/assets/site.css "Theme: "
 done

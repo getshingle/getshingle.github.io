@@ -1,0 +1,54 @@
+---
+title: Services extension
+description: What you offer, as cards on a services page and a page for each service, with its price, duration and a button to book it.
+---
+<article>
+  <nav aria-label="Breadcrumb"><a href="/extras/extensions/">Extensions</a></nav>
+  <hgroup>
+    <p>Extension</p>
+    <h1>Services</h1>
+    <p>What you offer, as cards on a services page and a page for each service, with its price, duration and a button to book it.</p>
+  </hgroup>
+  <div class="actions">
+    <a class="btn primary" href="/downloads/extension-services.zip">Download</a>
+    <a class="btn" href="/demo/extensions/services/" target="_blank" rel="noopener">See it ↗</a>
+  </div>
+
+  <figure><img src="/img/extensions/services.jpg" alt="The services page of the demo: three cards with pictures, prices and durations" width="1200" height="750"></figure>
+
+  <h2>What it is for</h2>
+  <p>Anything you sell or do: treatments, classes and courses, rooms, packages, practice areas, repairs. Each service gets a card and its own page, so you can explain it properly and link to it from anywhere.</p>
+
+  <h2>Write a service</h2>
+  <p>One file per service in <code>content/services/</code>. The number at the start sets the order. A folder holds the service's picture too:</p>
+  <pre><code>content/services/01_facial/index.html   → /services/facial/
+content/services/01_facial/cover.jpg    its picture
+content/services/02_massage.html        without a picture</code></pre>
+  <pre><code>---
+title: Facial treatment
+summary: Cleansing, a mask and a massage for tired skin.
+price: €65
+duration: 60 minutes
+book: https://cal.com/your-salon/facial
+book_label: Book a time
+---
+&lt;p&gt;What happens, what is included and who it is for.&lt;/p&gt;</code></pre>
+  <p>Every field you add, such as <code>price</code> or <code>duration</code>, appears as a fact under the title, and the first two on the card. Use your own words in any language: <code>cena: 65 €</code> works too. <code>book</code> is where the button goes: a booking page, your contact page or an email link.</p>
+
+  <h2>On other pages</h2>
+  <p><code>&#123;&#123;SERVICES}</code> shows all the cards on any page, for example on your home page.</p>
+  <p>If your website already has a page <code>content/services.html</code>, the extension's page replaces it. The build tells you, so you can move what you want to keep into <code>content/services/_index.html</code>.</p>
+
+  <h2>Add it</h2>
+  <ol>
+    <li>Download <a href="/downloads/extension-services.zip">extension-services.zip</a> and unzip it. Move the folder <code>services</code> and the two files <code>collection.sh</code> and <code>collection.css</code> into the <code>extensions</code> folder of your website. If your computer asks whether to replace the two files, say yes.</li>
+    <li>Run <code>bash build.sh</code>. The first time, the build adds example services in <code>content/services/</code> and a Services link to the menu, and tells you so.</li>
+    <li>Change the examples to your own and build again.</li>
+  </ol>
+  <p>The extension's <a href="https://github.com/getshingle/extensions/tree/main/services#readme">README</a>, also in the download, explains every field and how to change the look.</p>
+
+  <div class="actions">
+    <a class="btn" href="/extras/extensions/">All extensions</a>
+    <a class="btn" href="/extras/business/">Start from your business</a>
+  </div>
+</article>

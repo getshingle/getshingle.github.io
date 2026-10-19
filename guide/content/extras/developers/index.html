@@ -7,7 +7,7 @@ description: How Shingle's build works, how to change its templates, and how to 
   <hgroup>
     <p>For developers</p>
     <h1>How Shingle works</h1>
-    <p>Shingle is one bash script of under 400 lines, plus templates. It runs with bash 3.2 (macOS), newer bash (Linux) and Git Bash (Windows), and needs only the standard tools <code>find</code>, <code>sed</code>, <code>awk</code>, <code>base64</code> and <code>cksum</code>.</p>
+    <p>Shingle is one bash script of about 430 lines, plus templates. It runs with bash 3.2 (macOS), newer bash (Linux) and Git Bash (Windows), and needs only the standard tools <code>find</code>, <code>sed</code>, <code>awk</code>, <code>base64</code> and <code>cksum</code>.</p>
   </hgroup>
 
   <h2>Folders</h2>
@@ -28,8 +28,9 @@ dist/          the result; emptied on each build except hidden files such as .gi
     <li>Reads <code>site.conf</code> (Windows line endings are removed first).</li>
     <li>Copies <code>static/</code> and the extensions' <code>static/</code>. Joins <code>assets/base.css</code>, <code>extensions/*.css</code>, the extensions' <code>style.css</code> and the theme into <code>assets/site.css</code>, and the scripts into <code>assets/site.js</code>, each with a version number for caching.</li>
     <li>Turns each icon into <code>&#123;&#123;ICON_&lt;NAME&gt;}}</code> and the logo into <code>&#123;&#123;LOGO}}</code>.</li>
-    <li>Makes a page from each file in <code>content/</code>; other files are copied. A folder with an <code>_index</code> file belongs to an extension and is skipped.</li>
-    <li>Runs each extension's <code>build</code>, then each extension's <code>finish</code>.</li>
+    <li>Runs each extension's <code>build</code>: the extensions make their pages and set values such as <code>&#123;&#123;TESTIMONIALS}}</code>.</li>
+    <li>Makes a page from each file in <code>content/</code>; other files are copied. A folder with an <code>_index</code> file belongs to an extension and is skipped, and such a folder wins over a page with its name: with the services extension, <code>content/services.html</code> is not used.</li>
+    <li>Runs each extension's <code>finish</code>, when every page is there.</li>
   </ol>
 
   <h2>Pages</h2>
@@ -65,11 +66,13 @@ content/404.html            → /404.html</code></pre>
   example/         copied to content/&lt;name&gt;/ the first time
   README.md</code></pre>
   <p><code>extension.sh</code> is sourced by the build. It can set:</p>
-<pre><code>MENU_LINK="Recipes"    # added to MENU in site.conf the first time, as /recipes/
+<pre><code>MENU_LINK="Recipes"    # added to MENU in site.conf the first time, as /recipes/,
+                       # unless MENU links to /recipes/ already
 MENU_LIST=LEGAL        # optional: add it to another list instead
-build() { …; }         # runs after the pages are built
+build() { …; }         # runs before your pages are built
 finish() { …; }        # runs at the very end; PAGES lists every address</code></pre>
-  <p>Code shared by several extensions lives in <code>extensions/*.sh</code> and is loaded first. <code>collection.sh</code> lists entries for the blog, news, team, careers and portfolio:</p>
+  <p><code>build</code> makes the extension's pages with <code>write_page</code>, and can set values that any page can show. A value is a variable: <code>RECIPES="&lt;ul&gt;…&lt;/ul&gt;"</code> appears wherever a page says <code>&#123;&#123;RECIPES}}</code>. The extensions run in alphabetical order, so a value is ready for your own pages and for the pages of the extensions after it.</p>
+  <p>Code shared by several extensions lives in <code>extensions/*.sh</code> and is loaded first. <code>collection.sh</code> lists entries for the blog, news, team, careers, portfolio, services, testimonials, gallery and pricing:</p>
 <pre><code>MENU_LINK="Recipes"
 build() {
   LIST_SORT=desc LIST_PER_PAGE=12 LIST_FEED=true LIST_IMAGE_FILE=cover
@@ -79,7 +82,7 @@ item_hook() {    # optional, runs for every entry
   ITEM_SERVES=${FM_serves:+Serves $FM_serves}
 }</code></pre>
   <p>An entry is <code>content/&lt;name&gt;/&lt;key&gt;_&lt;slug&gt;.html</code> or a folder with <code>index.html</code>. The key (a date or a number) sorts the entries; the slug is the address. <code>_index.html</code> holds the list page's header, and its <code>per_page</code>, <code>sort</code>, <code>pages</code> and <code>feed</code> win over the defaults.</p>
-  <p>In <code>item_hook</code>, the header is in <code>FM_&lt;field&gt;</code> (in order in <code>FM_KEYS</code>) and the text in <code>BODY</code>. Templates get <code>ITEM_&lt;FIELD&gt;</code>, <code>ITEM_URL</code>, <code>ITEM_TITLE_LINK</code>, <code>ITEM_DATE</code>, <code>ITEM_DATE_TEXT</code>, <code>ITEM_IMAGE</code>, <code>ITEM_BODY</code>, and <code>JSON_&lt;FIELD&gt;</code> for <code>schema.json</code>. The list templates are <code>list.html</code>, <code>card.html</code>, <code>item.html</code>, <code>pager.html</code> and <code>schema.json</code>. Helpers return their result in <code>REPLY</code>: <code>html</code>, <code>json</code>, <code>field &lt;file&gt; &lt;key&gt;</code>, <code>date_text</code>, <code>email_link</code>, <code>phone_link</code>, <code>social_links</code>.</p>
+  <p>In <code>item_hook</code>, the header is in <code>FM_&lt;field&gt;</code> (in order in <code>FM_KEYS</code>), the text in <code>BODY</code> and the entry's file in <code>$file</code>. After <code>collection</code>, the array <code>COLLECTION_CARDS</code> holds every card, for a value such as <code>&#123;&#123;SERVICES}}</code>. Templates get <code>ITEM_&lt;FIELD&gt;</code>, <code>ITEM_URL</code>, <code>ITEM_TITLE_LINK</code>, <code>ITEM_DATE</code>, <code>ITEM_DATE_TEXT</code>, <code>ITEM_IMAGE</code>, <code>ITEM_BODY</code>, and <code>JSON_&lt;FIELD&gt;</code> for <code>schema.json</code>. The list templates are <code>list.html</code>, <code>card.html</code>, <code>item.html</code>, <code>pager.html</code> and <code>schema.json</code>. Helpers return their result in <code>REPLY</code>: <code>html</code>, <code>json</code>, <code>field &lt;file&gt; &lt;key&gt;</code>, <code>date_text</code>, <code>email_link</code>, <code>phone_link</code>, <code>social_links</code>.</p>
 
   <h2>Write a theme</h2>
   <p>A theme is <code>themes/&lt;name&gt;/theme.css</code>. It sets the color, font and size tokens; anything else in it wins over the template's styles, because the template's CSS is in layers and the theme is not. Two lines in its first comment are read by the build:</p>

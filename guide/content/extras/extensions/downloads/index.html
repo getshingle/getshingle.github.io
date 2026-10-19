@@ -1,0 +1,44 @@
+---
+title: Downloads extension
+description: Files to download, such as price lists, forms, brochures and reports, listed with their type and size.
+---
+<article>
+  <nav aria-label="Breadcrumb"><a href="/extras/extensions/">Extensions</a></nav>
+  <hgroup>
+    <p>Extension</p>
+    <h1>Downloads</h1>
+    <p>Files to download, such as price lists, forms, brochures and reports, listed with their type and size.</p>
+  </hgroup>
+  <div class="actions">
+    <a class="btn primary" href="/downloads/extension-downloads.zip">Download</a>
+    <a class="btn" href="/demo/extensions/downloads/" target="_blank" rel="noopener">See it ↗</a>
+  </div>
+
+  <figure><img src="/img/extensions/downloads.jpg" alt="The downloads page of the demo: PDFs with titles, descriptions and sizes" width="1200" height="750"></figure>
+
+  <h2>What it is for</h2>
+  <p>Patient and enrolment forms, price lists, menus as PDF, reports and whitepapers, a press kit: everything people want to print or keep.</p>
+
+  <h2>Add files</h2>
+  <p>Put them into <code>content/downloads/</code>. A folder makes a group with a heading:</p>
+  <pre><code>content/downloads/1_price-list-2026.pdf      → "Price list 2026", PDF, 120 KB
+content/downloads/1_price-list-2026.txt      optional: a title and a description
+content/downloads/2_forms/registration.pdf   in the group "Forms"</code></pre>
+  <p>The title comes from the file's name; a number at the start sets the order and is not shown. A text file with the same name gives a better title on its first line and a short description below it.</p>
+
+  <h2>On other pages</h2>
+  <p><code>&#123;&#123;DOWNLOADS}</code> shows the list on any page.</p>
+
+  <h2>Add it</h2>
+  <ol>
+    <li>Download <a href="/downloads/extension-downloads.zip">extension-downloads.zip</a> and unzip it. Move the folder <code>downloads</code> into the <code>extensions</code> folder of your website.</li>
+    <li>Run <code>bash build.sh</code>. The first time, the build adds example PDFs in <code>content/downloads/</code> and a Downloads link at the bottom of every page, and tells you so.</li>
+    <li>Change the examples to your own and build again.</li>
+  </ol>
+  <p>The extension's <a href="https://github.com/getshingle/extensions/tree/main/downloads#readme">README</a>, also in the download, explains every field and how to change the look.</p>
+
+  <div class="actions">
+    <a class="btn" href="/extras/extensions/">All extensions</a>
+    <a class="btn" href="/extras/business/">Start from your business</a>
+  </div>
+</article>

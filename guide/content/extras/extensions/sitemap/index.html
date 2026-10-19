@@ -1,0 +1,43 @@
+---
+title: Sitemap extension
+description: A list of every page of your website for Google and other search engines (sitemap.xml), and the robots.txt file that points them to it.
+---
+<article>
+  <nav aria-label="Breadcrumb"><a href="/extras/extensions/">Extensions</a></nav>
+  <hgroup>
+    <p>Extension</p>
+    <h1>Sitemap</h1>
+    <p>A list of every page of your website for Google and other search engines (sitemap.xml), and the robots.txt file that points them to it.</p>
+  </hgroup>
+  <div class="actions">
+    <a class="btn primary" href="/downloads/extension-sitemap.zip">Download</a>
+    <a class="btn" href="/demo/extensions/sitemap.xml" target="_blank" rel="noopener">See it ↗</a>
+  </div>
+
+  <h2>Why you need it</h2>
+  <p>Search engines find pages by following links, which takes time and can miss pages that few links point to. A sitemap hands them the full list at once. It matters most for a new website, and whenever you add pages.</p>
+  <p>After your website is online, add it in <a href="https://search.google.com/search-console">Google Search Console</a> and <a href="https://www.bing.com/webmasters">Bing Webmaster Tools</a> and submit <code>https://www.your-domain.com/sitemap.xml</code>. They then show you how people find you.</p>
+
+  <h2>What you do</h2>
+  <p>Only one thing: set <code>SITE_URL</code> in <code>site.conf</code> to your real address, such as <code>SITE_URL="https://www.example.com"</code>. Every build makes:</p>
+  <pre><code>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"&gt;
+  &lt;url&gt;&lt;loc&gt;https://www.example.com/&lt;/loc&gt;&lt;/url&gt;
+  &lt;url&gt;&lt;loc&gt;https://www.example.com/about/&lt;/loc&gt;&lt;/url&gt;
+  …
+&lt;/urlset&gt;</code></pre>
+  <p>To give search engines your own rules, put your own <code>robots.txt</code> into <code>static/</code>; the extension then leaves it alone.</p>
+
+  <h2>Add it</h2>
+  <ol>
+    <li>Download <a href="/downloads/extension-sitemap.zip">extension-sitemap.zip</a> and unzip it. Move the folder <code>sitemap</code> into the <code>extensions</code> folder of your website.</li>
+    <li>Run <code>bash build.sh</code>. The first time, the build adds <code>sitemap.xml</code> and <code>robots.txt</code> to every build, and tells you so.</li>
+    <li>Change the examples to your own and build again.</li>
+  </ol>
+  <p>The extension's <a href="https://github.com/getshingle/extensions/tree/main/sitemap#readme">README</a>, also in the download, explains every field and how to change the look.</p>
+
+  <div class="actions">
+    <a class="btn" href="/extras/extensions/">All extensions</a>
+    <a class="btn" href="/extras/business/">Start from your business</a>
+  </div>
+</article>

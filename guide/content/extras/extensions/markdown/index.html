@@ -1,0 +1,77 @@
+---
+title: Markdown extension
+description: Write pages, posts and every other entry in Markdown, a simple text format, instead of HTML. It needs one small extra program.
+---
+<article>
+  <nav aria-label="Breadcrumb"><a href="/extras/extensions/">Extensions</a></nav>
+  <hgroup>
+    <p>Extension</p>
+    <h1>Markdown</h1>
+    <p>Write pages, posts and every other entry in Markdown, a simple text format, instead of HTML. It needs one small extra program.</p>
+  </hgroup>
+  <div class="actions">
+    <a class="btn primary" href="/downloads/extension-markdown.zip">Download</a>
+    <a class="btn" href="/demo/extensions/markdown/" target="_blank" rel="noopener">See it ↗</a>
+  </div>
+
+  <figure><img src="/img/extensions/markdown.jpg" alt="The Markdown example page: what you type next to what you get" width="1200" height="750"></figure>
+
+  <h2>Why Markdown?</h2>
+  <p>Markdown is plain text with a few signs: <code>## A heading</code>, <code>**bold**</code>, <code>- a list item</code>, <code>[a link](/contact/)</code>. It is easier to write than HTML, especially for long articles.</p>
+  <div class="cols-2">
+    <div>
+      <h3>You type</h3>
+      <pre><code>## Opening hours
+
+We are open **every day**
+except Monday.
+
+- Breakfast until 11:30
+- Lunch from 12:00
+
+[Book a table](/contact/)</code></pre>
+    </div>
+    <div>
+      <h3>You get</h3>
+      <div class="example">
+        <h4>Opening hours</h4>
+        <p>We are open <strong>every day</strong> except Monday.</p>
+        <ul><li>Breakfast until 11:30</li><li>Lunch from 12:00</li></ul>
+        <p><a href="/extras/extensions/markdown/">Book a table</a></p>
+      </div>
+    </div>
+  </div>
+
+  <h2>Install cmark-gfm first</h2>
+  <p>The extension uses a small program, cmark-gfm, to turn Markdown into HTML:</p>
+  <ul>
+    <li><strong>Mac:</strong> install <a href="https://brew.sh">Homebrew</a>, then run <code>brew install cmark-gfm</code>.</li>
+    <li><strong>Ubuntu, Debian:</strong> <code>sudo apt install cmark-gfm</code>.</li>
+    <li><strong>Windows:</strong> use WSL (Ubuntu inside Windows) from the Microsoft Store, then the Ubuntu command above.</li>
+  </ul>
+  <p>If it is missing, the build stops and says how to install it.</p>
+
+  <h2>Write in Markdown</h2>
+  <p>Name the file <code>.md</code> instead of <code>.html</code>: <code>content/about.md</code>, <code>content/blog/2026-10-18_my-post.md</code>, or <code>index.md</code> in a folder. The header at the top stays exactly the same:</p>
+  <pre><code>---
+title: About us
+description: One sentence for search results.
+---
+We are a small studio by the river.
+
+![The studio from the street](studio.jpg "Our studio since 2015")</code></pre>
+  <p>A picture alone on its line gets the text in quotes as its caption. Tables, values such as <code>&#123;&#123;EMAIL}</code>, and HTML for anything Markdown cannot do all work too. The example page that comes with the extension shows them all; delete the folder <code>content/markdown</code> when you no longer need it.</p>
+
+  <h2>Add it</h2>
+  <ol>
+    <li>Download <a href="/downloads/extension-markdown.zip">extension-markdown.zip</a> and unzip it. Move the folder <code>markdown</code> into the <code>extensions</code> folder of your website.</li>
+    <li>Run <code>bash build.sh</code>. The first time, the build adds an example page, <code>content/markdown/index.md</code>, that shows everything Markdown can do, and tells you so.</li>
+    <li>Change the examples to your own and build again.</li>
+  </ol>
+  <p>The extension's <a href="https://github.com/getshingle/extensions/tree/main/markdown#readme">README</a>, also in the download, explains every field and how to change the look.</p>
+
+  <div class="actions">
+    <a class="btn" href="/extras/extensions/">All extensions</a>
+    <a class="btn" href="/extras/business/">Start from your business</a>
+  </div>
+</article>

@@ -8,7 +8,8 @@ Shingle itself? Go to **<https://getshingle.github.io>** or
 
 ```
 guide/       the pages of the guide, built with Shingle on top of the template
-examples/    complete example websites (halo)
+examples/    complete example websites (halo, ember, stillwater)
+demo/        additions to the extensions demo's pages
 tools/
   website.sh builds the guide, demos and downloads into _site/
   package.sh makes the download zips (website.sh runs it)
@@ -48,7 +49,9 @@ bash tools/test.sh       # check everything
 bash tools/website.sh    # build _site/, then open _site/index.html
 ```
 
-`website.sh` needs `zip`, which comes with macOS and Linux.
+`website.sh` needs `zip`, which comes with macOS and Linux. With
+[cmark-gfm](https://github.com/github/cmark-gfm) installed, the extensions demo
+includes the markdown extension too.
 
 ## License
 

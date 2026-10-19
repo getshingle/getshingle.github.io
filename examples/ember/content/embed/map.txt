@@ -1,0 +1,4 @@
+---
+title: Ember on the map
+link: https://www.openstreetmap.org/export/embed.html?bbox=12.5830%2C55.6770%2C12.5990%2C55.6830&layer=mapnik&marker=55.6798%2C12.5905
+---

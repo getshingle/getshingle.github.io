@@ -1,0 +1,68 @@
+---
+title: Kitchen and wine bar
+description: Ember cooks over a wood fire with what the farms and the harbour bring each morning. Natural wines, a long table and a bar for walk-ins.
+---
+<section class="hero">
+  <div>
+    <hgroup>
+      <p>Kitchen and wine bar</p>
+      <h1>Cooked over fire, poured with care</h1>
+      <p>We cook over a wood fire with what the farms and the harbour bring each morning. Small plates to share, a few bottles worth talking about, and a long table for friends.</p>
+    </hgroup>
+    <div class="actions">
+      <a class="btn primary" href="/contact/#book">Book a table</a>
+      <a class="btn" href="/menu/">See the menu</a>
+    </div>
+  </div>
+  <figure>
+    <img src="/img/hero.jpg" alt="A wooden table at night with small plates, two glasses of red wine and a candle" width="1200" height="900" fetchpriority="high">
+  </figure>
+</section>
+
+<section>
+  <hgroup>
+    <h2>An evening at Ember</h2>
+    <p>Come for a glass at the bar, or stay for the whole menu. Either way, the fire is lit from five.</p>
+  </hgroup>
+  <div class="cols-3">
+    <div>
+      <h3>Small plates</h3>
+      <p>The menu changes with the week's catch and harvest. Order a few plates for the table; they come when they are ready.</p>
+      <a href="/menu/">Tonight's menu</a>
+    </div>
+    <div>
+      <h3>Natural wine</h3>
+      <p>Forty bottles from small growers, a dozen of them by the glass. Tell us what you like and we will open something.</p>
+      <a href="/menu/#wine-by-the-glass">Wine by the glass</a>
+    </div>
+    <div>
+      <h3>The long table</h3>
+      <p>Up to fourteen guests at one table, with a menu from the fire made for your evening. Ideal for birthdays and team dinners.</p>
+      <a href="/contact/#book">Ask for the long table</a>
+    </div>
+  </div>
+</section>
+
+<section>
+  <hgroup>
+    <h2>What our guests say</h2>
+  </hgroup>
+  {{TESTIMONIALS}}
+</section>
+
+<section class="tinted">
+  <div class="cols-2">
+    <div>
+      <h2>Opening hours</h2>
+      {{OPENING_HOURS}}
+    </div>
+    <div>
+      <h2>Find us</h2>
+      <p>{{ADDRESS}}, on the corner of the old fish market. Five minutes' walk from the station.</p>
+      <div class="actions">
+        <a class="btn primary" href="/contact/#book">Book a table</a>
+        <a class="btn" href="{{MAP_URL}}">Open the map</a>
+      </div>
+    </div>
+  </div>
+</section>

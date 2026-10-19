@@ -1,0 +1,48 @@
+---
+title: Careers extension
+description: Your job openings, each with its own page and an apply button. Open positions show up in Google's job search.
+---
+<article>
+  <nav aria-label="Breadcrumb"><a href="/extras/extensions/">Extensions</a></nav>
+  <hgroup>
+    <p>Extension</p>
+    <h1>Careers</h1>
+    <p>Your job openings, each with its own page and an apply button. Open positions show up in Google's job search.</p>
+  </hgroup>
+  <div class="actions">
+    <a class="btn primary" href="/downloads/extension-careers.zip">Download</a>
+    <a class="btn" href="/demo/extensions/careers/" target="_blank" rel="noopener">See it ↗</a>
+  </div>
+
+  <figure><img src="/img/extensions/careers.jpg" alt="The careers page of the demo: two open positions with their place and type" width="1200" height="750"></figure>
+
+  <h2>What it is for</h2>
+  <p>When you hire. The careers page tells people why to work with you, and each position has the details and a way to apply.</p>
+
+  <h2>Add a position</h2>
+  <pre><code>---
+title: Project architect
+location: Riverton
+type: Full-time
+workplace: Hybrid
+deadline: 2026-11-30
+apply: jobs@example.com
+summary: One sentence for the list.
+---
+&lt;h2&gt;What you will do&lt;/h2&gt;
+&lt;p&gt;…&lt;/p&gt;</code></pre>
+  <p><code>status: closed</code> keeps a filled position on the page, without the apply button. Delete the file to remove it completely.</p>
+
+  <h2>Add it</h2>
+  <ol>
+    <li>Download <a href="/downloads/extension-careers.zip">extension-careers.zip</a> and unzip it. Move the folder <code>careers</code> and the two files <code>collection.sh</code> and <code>collection.css</code> into the <code>extensions</code> folder of your website. If your computer asks whether to replace the two files, say yes.</li>
+    <li>Run <code>bash build.sh</code>. The first time, the build adds example jobs in <code>content/careers/</code> and a Careers link to the menu, and tells you so.</li>
+    <li>Change the examples to your own and build again.</li>
+  </ol>
+  <p>The extension's <a href="https://github.com/getshingle/extensions/tree/main/careers#readme">README</a>, also in the download, explains every field and how to change the look.</p>
+
+  <div class="actions">
+    <a class="btn" href="/extras/extensions/">All extensions</a>
+    <a class="btn" href="/extras/business/">Start from your business</a>
+  </div>
+</article>

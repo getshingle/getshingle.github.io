@@ -1,0 +1,26 @@
+---
+title: Contact and booking
+description: Book a table at Ember, find us by the harbour, and see our opening hours.
+---
+<section>
+  <hgroup>
+    <p>Contact</p>
+    <h1>Book a table</h1>
+    <p>Send us a request and we confirm by email, usually within a few hours. For tonight, please call {{PHONE}}.</p>
+  </hgroup>
+  <div class="cols-2">
+    <div id="book">
+      {{FORM_BOOK}}
+    </div>
+    <div>
+      <h2>Opening hours</h2>
+      {{OPENING_HOURS}}
+      <h2>Where we are</h2>
+      <p>{{ADDRESS}}<br>Email {{EMAIL}}<br>Phone {{PHONE}}</p>
+    </div>
+  </div>
+</section>
+
+<section class="narrow">
+  {{EMBED_MAP}}
+</section>

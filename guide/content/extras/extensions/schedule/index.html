@@ -1,0 +1,47 @@
+---
+title: Schedule extension
+description: A weekly timetable: one column per day on a wide screen, one day below the other on a phone.
+---
+<article>
+  <nav aria-label="Breadcrumb"><a href="/extras/extensions/">Extensions</a></nav>
+  <hgroup>
+    <p>Extension</p>
+    <h1>Schedule</h1>
+    <p>A weekly timetable: one column per day on a wide screen, one day below the other on a phone.</p>
+  </hgroup>
+  <div class="actions">
+    <a class="btn primary" href="/downloads/extension-schedule.zip">Download</a>
+    <a class="btn" href="/demo/stillwater/schedule/" target="_blank" rel="noopener">See it ↗</a>
+  </div>
+
+  <figure><img src="/img/extensions/schedule.jpg" alt="The schedule of the yoga studio example: seven columns of classes with times and teachers" width="1200" height="750"></figure>
+
+  <h2>What it is for</h2>
+  <p>Classes in a gym or a yoga studio, courses in a school, training times in a club, the day in a kindergarten. The columns do not have to be days: rooms, groups or months work the same way.</p>
+
+  <h2>Write a day</h2>
+  <p>One text file per day in <code>content/schedule/</code>, in the order of their numbers:</p>
+  <pre><code>---
+title: Monday
+---
+07:00-08:00 | Morning flow | Maja
+18:00-19:15 | Vinyasa | Maja | Studio 1
+Closed in the afternoon</code></pre>
+  <p>One line per class: the time, the name and any details such as the teacher, the room or the level, separated by <code>|</code>. A line without <code>|</code> is a note.</p>
+
+  <h2>On other pages</h2>
+  <p><code>&#123;&#123;SCHEDULE}</code> shows the timetable on any page. The page's title and text are in <code>content/schedule/_index.html</code>.</p>
+
+  <h2>Add it</h2>
+  <ol>
+    <li>Download <a href="/downloads/extension-schedule.zip">extension-schedule.zip</a> and unzip it. Move the folder <code>schedule</code> into the <code>extensions</code> folder of your website.</li>
+    <li>Run <code>bash build.sh</code>. The first time, the build adds an example week in <code>content/schedule/</code> and a Schedule link to the menu, and tells you so.</li>
+    <li>Change the examples to your own and build again.</li>
+  </ol>
+  <p>The extension's <a href="https://github.com/getshingle/extensions/tree/main/schedule#readme">README</a>, also in the download, explains every field and how to change the look.</p>
+
+  <div class="actions">
+    <a class="btn" href="/extras/extensions/">All extensions</a>
+    <a class="btn" href="/extras/business/">Start from your business</a>
+  </div>
+</article>

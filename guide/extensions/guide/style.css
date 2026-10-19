@@ -24,5 +24,30 @@
   .table td:first-child { white-space: nowrap; }
 
   main > article pre { margin-block: .75rem 1.25rem; }
+  main > article > figure { margin-block: 2rem 2.5rem; }
+  main > article > figure img { width: 100%; border: 1px solid var(--line); border-radius: var(--radius); }
+  main > article .cols-2 { margin-bottom: 1.25rem; }
+  main > article .cols-2 pre { margin: 0; }
+  .example { padding: 1rem 1.25rem; border: 1px solid var(--line); border-radius: 14px; background: var(--paper); }
+  .example > :last-child { margin-bottom: 0; }
+  .example h4 { margin-top: 0; }
   main > article li > pre { margin-top: .75rem; }
+
+  /* Start from your business: jump links, and the suggestions on each card. */
+  .jump { display: flex; flex-wrap: wrap; gap: .5rem; }
+  .jump a {
+    padding: .4rem 1rem;
+    border-radius: 999px;
+    background: var(--tone, var(--surface));
+    color: var(--on-tone, var(--ink));
+    font-size: .9375rem;
+    font-weight: 500;
+    text-decoration: none;
+  }
+  .jump a:hover { text-decoration: underline; }
+  main > section[id] { scroll-margin-top: 4.5rem; }
+  .recipe { display: grid; gap: .5rem; margin: auto 0 0; padding-top: 1rem; border-top: 1px solid var(--line); font-size: .9375rem; }
+  .recipe div { display: grid; grid-template-columns: 6.25rem minmax(0, 1fr); gap: .75rem; }
+  .recipe dt { color: var(--muted); }
+  .recipe dd { margin: 0; }
 }

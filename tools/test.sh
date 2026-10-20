@@ -24,6 +24,9 @@ has() { grep -q -- "$2" "$SITE_DIR/$1"; }            # has <file in the website>
 lacks() { ! grep -q -- "$2" "$SITE_DIR/$1"; }
 exists() { [[ -e $SITE_DIR/$1 ]]; }
 missing() { [[ ! -e $SITE_DIR/$1 ]]; }
+no_address() {   # no readable email address, mailto: link or "[at]" in any page
+  ! grep -rqE '[A-Za-z0-9._%+-]+@[A-Za-z0-9-]+\.[A-Za-z]{2,}|mailto:|\[at\]' "$SITE_DIR/dist" --include='*.html'
+}
 build() {   # build [preview]: must succeed
   if ! (cd "$SITE_DIR" && "$BASH" build.sh "$@") > "$WORK/log" 2>&1; then
     cat "$WORK/log"; echo "  FAIL  build.sh $*"; exit 1
@@ -50,6 +53,22 @@ check "no links from the root" lacks dist/about/index.html 'href="/'
 check "404 links from the root" has dist/404.html 'href="/assets/site.css'
 check "adds the icons" has dist/index.html '<svg class="icon"'
 check "hides the email address" has dist/index.html 'data-email='
+
+echo "Email addresses:"
+printf -- '---\ntitle: Write\n---\n<p><a href="mailto:me@example.com">me@example.com</a> <a class="btn" href="mailto:me@example.com?subject=Hi">Write to us</a> <a href="mailto:me@example.com" aria-label="Email">{{ICON_EMAIL}}</a></p>\n' > "$SITE_DIR/content/write.html"
+build
+check "leaves no address in the pages" no_address
+check "hides an address written in a page" has dist/write/index.html '<a data-email="bWVAZXhhbXBsZS5jb20="></a>'
+check "keeps the words of a link" has dist/write/index.html '>Write to us</a>'
+check "keeps the subject" has dist/write/index.html 'data-email-query="subject=Hi"'
+check "keeps an icon's name valid" has dist/write/index.html 'role="link" aria-label="Email"'
+check "says JavaScript shows the address" has dist/write/index.html '<noscript>Enable JavaScript to see the email address.</noscript>'
+cp "$SITE_DIR/site.conf" "$WORK/conf.keep"
+printf 'EMAIL_NOSCRIPT=""\n' >> "$SITE_DIR/site.conf"
+build
+check "EMAIL_NOSCRIPT=\"\" leaves the note out" lacks dist/write/index.html '<noscript>'
+mv "$WORK/conf.keep" "$SITE_DIR/site.conf"
+rm "$SITE_DIR/content/write.html"
 
 echo "Settings and dist:"
 mkdir -p "$SITE_DIR/dist/.git" && touch "$SITE_DIR/dist/.git/keep" "$SITE_DIR/dist/old.html"
@@ -89,6 +108,10 @@ check "makes a feed" exists dist/blog/feed.xml
 check "builds the team" exists dist/team/anna-berg/index.html
 check "links an author to the team" has dist/blog/daylight-first/index.html 'href="../../team/anna-berg/index.html"'
 check "builds careers" exists dist/careers/project-architect/index.html
+check "hides the address of an apply button" has dist/careers/project-architect/index.html 'data-email-query="subject=Application'
+check "no apply button for a closed position" lacks dist/careers/interior-design-intern/index.html 'Apply for this position'
+check "no apply button on the careers page" lacks dist/careers/index.html 'Apply for this position'
+check "leaves no address in any extension's pages" no_address
 check "builds the portfolio" exists dist/portfolio/riverside-house/index.html
 check "builds news" exists dist/news/index.html
 check "builds the privacy page" exists dist/privacy/index.html
@@ -130,7 +153,10 @@ title: Values
 </section>
 EOF
 sed 's|^FOOTER_TEXT=.*|FOOTER_TEXT="Open {{OPENING_HOURS_TEXT}}."|' "$SITE_DIR/site.conf" > "$WORK/conf" && mv "$WORK/conf" "$SITE_DIR/site.conf"
+printf -- '---\ntitle: How do I reach you?\ntopic: Fees\n---\n<p>Write to {{EMAIL}}.</p>\n' > "$SITE_DIR/content/faq/07_reach-you.html"
 build
+check "hides an address in structured data" has dist/faq/index.html '<a data-email=\\"aGVsbG9AZXhhbXBsZS5jb20=\\"><\\/a>'
+check "leaves no address in the pages, structured data included" no_address
 check "the services extension wins over content/services.html" grep -q "Not used: content/services.html" "$WORK/log"
 check "adds no second link to /services/" test "$(grep -c '|/services/"' "$SITE_DIR/site.conf")" -eq 1
 check "builds a service" exists dist/services/new-homes/index.html

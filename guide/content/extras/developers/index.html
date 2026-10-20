@@ -7,7 +7,7 @@ description: How Shingle's build works, how to change its templates, and how to 
   <hgroup>
     <p>For developers</p>
     <h1>How Shingle works</h1>
-    <p>Shingle is one bash script of about 430 lines, plus templates. It runs with bash 3.2 (macOS), newer bash (Linux) and Git Bash (Windows), and needs only the standard tools <code>find</code>, <code>sed</code>, <code>awk</code>, <code>base64</code> and <code>cksum</code>.</p>
+    <p>Shingle is one bash script of about 470 lines, plus templates. It runs with bash 3.2 (macOS), newer bash (Linux) and Git Bash (Windows), and needs only the standard tools <code>find</code>, <code>sed</code>, <code>awk</code>, <code>base64</code> and <code>cksum</code>.</p>
   </hgroup>
 
   <h2>Folders</h2>
@@ -43,6 +43,7 @@ content/404.html            → /404.html</code></pre>
 
   <h2>Values and the line rule</h2>
   <p>Pages and templates can use any variable as <code>&#123;&#123;NAME}}</code>: everything in <code>site.conf</code>, <code>&#123;&#123;EMAIL}}</code> and <code>&#123;&#123;PHONE}}</code> as links (the plain values are <code>&#123;&#123;EMAIL_ADDRESS}}</code> and <code>&#123;&#123;PHONE_NUMBER}}</code>), <code>&#123;&#123;ICON_GITHUB}}</code>, <code>&#123;&#123;LOGO}}</code>, <code>&#123;&#123;YEAR}}</code> and the <code>PAGE_</code> values. Values are HTML-escaped when they are read from a header.</p>
+  <p><strong>Email addresses</strong> never appear in the finished HTML. Every <code>mailto:</code> link in a page, whether it comes from <code>&#123;&#123;EMAIL}}</code>, an extension or a page you wrote, keeps only the address in base64 (<code>data-email</code>), also inside structured data for search engines, and a link that showed the address is left empty; <code>assets/script.js</code> turns it back into a normal link when the page opens. Without JavaScript, <code>EMAIL_NOSCRIPT</code> from <code>site.conf</code> is shown instead (<code>EMAIL_NOSCRIPT=""</code> for nothing). <code>&#123;&#123;EMAIL_ADDRESS}}</code> is the plain address and stays readable.</p>
   <p>Templates have no if-statements. One rule replaces them: <strong>a line whose values are all empty is left out.</strong> A phone line in the footer disappears when <code>PHONE</code> is empty.</p>
 
   <h2>Templates</h2>

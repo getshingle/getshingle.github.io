@@ -18,6 +18,7 @@ description: Write pages, posts and every other entry in Markdown, a simple text
 
   <h2>Why Markdown?</h2>
   <p>Markdown is plain text with a few signs: <code>## A heading</code>, <code>**bold**</code>, <code>- a list item</code>, <code>[a link](/contact/)</code>. It is easier to write than HTML, especially for long articles.</p>
+  <p>You do not need it: HTML stays the default, and Shingle reads <code>.html</code> pages with nothing to install. The extension is for those who would rather write Markdown.</p>
   <div class="cols-2">
     <div>
       <h3>You type</h3>
@@ -47,6 +48,7 @@ except Monday.
   <ul>
     <li><strong>Mac:</strong> install <a href="https://brew.sh">Homebrew</a>, then run <code>brew install cmark-gfm</code>.</li>
     <li><strong>Ubuntu, Debian:</strong> <code>sudo apt install cmark-gfm</code>.</li>
+    <li><strong>Arch Linux:</strong> <code>sudo pacman -S cmark-gfm</code>.</li>
     <li><strong>Windows:</strong> use WSL (Ubuntu inside Windows) from the Microsoft Store, then the Ubuntu command above.</li>
   </ul>
   <p>If it is missing, the build stops and says how to install it.</p>
@@ -60,7 +62,7 @@ description: One sentence for search results.
 We are a small studio by the river.
 
 ![The studio from the street](studio.jpg "Our studio since 2015")</code></pre>
-  <p>A picture alone on its line gets the text in quotes as its caption. Tables, values such as <code>&#123;&#123;EMAIL}</code>, and HTML for anything Markdown cannot do all work too. The example page that comes with the extension shows them all; delete the folder <code>content/markdown</code> when you no longer need it.</p>
+  <p>A picture alone on its line gets the text in quotes as its caption. Tables, values such as <code>&#123;&#123;EMAIL}}</code>, and HTML for anything Markdown cannot do all work too. The example page that comes with the extension shows them all; delete the folder <code>content/markdown</code> when you no longer need it.</p>
 
   <h2>Add it</h2>
   <ol>

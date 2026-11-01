@@ -55,11 +55,12 @@ check "adds the icons" has dist/index.html '<svg class="icon"'
 check "hides the email address" has dist/index.html 'data-email='
 
 echo "Email addresses:"
-printf -- '---\ntitle: Write\n---\n<p><a href="mailto:me@example.com">me@example.com</a> <a class="btn" href="mailto:me@example.com?subject=Hi">Write to us</a> <a href="mailto:me@example.com" aria-label="Email">{{ICON_EMAIL}}</a></p>\n' > "$SITE_DIR/content/write.html"
+printf -- '---\ntitle: Write\n---\n<p><a href="mailto:me@example.com">me@example.com</a> <a class="btn" href="mailto:me@example.com?subject=Hi">Write to us</a> <a href="mailto:me@example.com" aria-label="Email">{{ICON_EMAIL}}</a> <a href="mailto:me@example.com">Mail me@example.com today</a></p>\n' > "$SITE_DIR/content/write.html"
 build
 check "leaves no address in the pages" no_address
 check "hides an address written in a page" has dist/write/index.html '<a data-email="bWVAZXhhbXBsZS5jb20="></a>'
 check "keeps the words of a link" has dist/write/index.html '>Write to us</a>'
+check "keeps the words around an address" has dist/write/index.html '>Mail <span data-email-text></span> today</a>'
 check "keeps the subject" has dist/write/index.html 'data-email-query="subject=Hi"'
 check "keeps an icon's name valid" has dist/write/index.html 'role="link" aria-label="Email"'
 check "says JavaScript shows the address" has dist/write/index.html '<noscript>Enable JavaScript to see the email address.</noscript>'
@@ -69,6 +70,29 @@ build
 check "EMAIL_NOSCRIPT=\"\" leaves the note out" lacks dist/write/index.html '<noscript>'
 mv "$WORK/conf.keep" "$SITE_DIR/site.conf"
 rm "$SITE_DIR/content/write.html"
+
+echo "Pages:"
+cp "$SITE_DIR/site.conf" "$WORK/conf.keep"
+printf 'SITE_DESCRIPTION=%s\n' "'Rooms with \"soul\" & light'" >> "$SITE_DIR/site.conf"
+cat > "$SITE_DIR/content/pics.html" <<'EOF'
+---
+title: Pictures
+---
+<img src="/img/a.jpg" srcset="/img/a.jpg 1x, /img/b.jpg 2x" alt="">
+<video poster="/img/p.jpg"></video>
+<div style="background-image: url('/img/c.jpg')"></div>
+<p>{{EMIAL}}</p>
+EOF
+build
+check "escapes text from site.conf" has dist/pics/index.html 'content="Rooms with &quot;soul&quot; &amp; light"'
+check "links in srcset" has dist/pics/index.html 'srcset="../img/a.jpg 1x, ../img/b.jpg 2x"'
+check "links in poster" has dist/pics/index.html 'poster="../img/p.jpg"'
+check "links in url()" has dist/pics/index.html "url('../img/c.jpg')"
+check "says a value has no value" grep -q '{{EMIAL}} has no value' "$WORK/log"
+mkdir -p "$SITE_DIR/content/pics" && cp "$SITE_DIR/content/pics.html" "$SITE_DIR/content/pics/index.html"
+check "stops at two files for one page" fails_with "which another file made already"
+rm -r "$SITE_DIR/content/pics" "$SITE_DIR/content/pics.html"
+mv "$WORK/conf.keep" "$SITE_DIR/site.conf"
 
 echo "Settings and dist:"
 mkdir -p "$SITE_DIR/dist/.git" && touch "$SITE_DIR/dist/.git/keep" "$SITE_DIR/dist/old.html"
@@ -98,6 +122,7 @@ for dir in "$EXTENSIONS"/*/; do
   name=${dir%/} && name=${name##*/}
   if [[ $name != markdown ]]; then add_extension "$SITE_DIR" "$name"; fi
 done
+printf -- '---\ntitle: Thanks\nrobots: noindex\n---\n<p>Thanks.</p>\n' > "$SITE_DIR/content/thanks.html"
 build
 check "copies example content" exists content/blog/_index.html
 check "adds menu links" has site.conf '"Blog|/blog/"'
@@ -116,10 +141,13 @@ check "builds the portfolio" exists dist/portfolio/riverside-house/index.html
 check "builds news" exists dist/news/index.html
 check "builds the privacy page" exists dist/privacy/index.html
 check "makes a sitemap" has dist/sitemap.xml '/blog/daylight-first/'
+check "leaves noindex pages out of the sitemap" lacks dist/sitemap.xml '/thanks/'
 check "copies static files" exists dist/_headers
 build
 check "adds a menu link only once" test "$(grep -c '"Blog|/blog/"' "$SITE_DIR/site.conf")" -eq 1
 mv "$SITE_DIR/extensions/careers" "$SITE_DIR/extensions/_careers"
+build
+check "says a menu link has no page" grep -q '"Careers" links to /careers/' "$WORK/log"
 grep -v '"Careers|/careers/"' "$SITE_DIR/site.conf" > "$WORK/conf" && mv "$WORK/conf" "$SITE_DIR/site.conf"
 build
 check "switches an extension off with _" missing dist/careers/index.html
@@ -129,6 +157,17 @@ build
 check "leaves drafts out" missing dist/blog/draft-note/index.html
 build preview
 check "preview builds drafts" exists dist/blog/draft-note/index.html
+# A list extension of your own without item_hook gets none from another one.
+mkdir -p "$SITE_DIR/extensions/awards/templates" "$SITE_DIR/extensions/zebra" "$SITE_DIR/content/awards"
+printf 'build() {\n  collection\n}\n' > "$SITE_DIR/extensions/awards/extension.sh"
+printf 'item_hook() { ITEM_LEAK=leaked; }\n' > "$SITE_DIR/extensions/zebra/extension.sh"
+for file in list card pager; do echo '<p>{{LIST_ITEMS}}{{ITEM_TITLE}}</p>' > "$SITE_DIR/extensions/awards/templates/$file.html"; done
+printf '<p>Award</p>\n<p>[{{ITEM_LEAK}}]</p>\n' > "$SITE_DIR/extensions/awards/templates/item.html"
+printf -- '---\ntitle: Best House\n---\n' > "$SITE_DIR/content/awards/001_best-house.html"
+build
+check "builds an extension of your own" exists dist/awards/best-house/index.html
+check "runs no other extension's item_hook" lacks dist/awards/best-house/index.html 'leaked'
+rm -r "$SITE_DIR/extensions/awards" "$SITE_DIR/extensions/zebra" "$SITE_DIR/content/awards"
 mv "$SITE_DIR/extensions/collection.css" "$WORK/collection.css"
 check "says where collection.css goes when it is missing" fails_with "Put them straight into extensions/"
 mv "$WORK/collection.css" "$SITE_DIR/extensions/"
